@@ -20,4 +20,4 @@ export const put = async (path: string, data: object, config?: object): Promise<
 export const patch = async (path: string, data: object, config?: object): Promise<Response> => {
   const response = await http.patch(path, data, config);
   return response.data
-}
+} 

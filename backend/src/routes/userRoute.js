@@ -7,6 +7,4 @@ route.post('/login', async(userController.verifyLogin))
 
 route.post('/signup', async(userController.verifySignup))
 
-
-
 module.exports = route

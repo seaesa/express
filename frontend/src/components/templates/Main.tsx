@@ -1,13 +1,22 @@
 import { Outlet } from "react-router-dom";
-import Footer from "../layout/Footer";
 import Header from "../layout/Header";
+import LeftSide from "../layout/LeftSide";
+import RightSide from "../layout/RightSide";
+import Action from "../action";
 
 export default function Template() {
   return (
     <>
       <Header />
-      <Outlet />
-      <Footer />
+      <div className="flex">
+        <LeftSide />
+        <div className="flex flex-col">
+          <Action />
+          <Outlet />
+        </div>
+        <RightSide />
+      </div>
     </>
+
   )
 }
