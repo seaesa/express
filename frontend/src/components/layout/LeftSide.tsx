@@ -1,6 +1,5 @@
 export default function LeftSide() {
   return (
-
     <aside className="z-20 hidden w-80 overflow-y-auto  md:block flex-shrink-0">
       <div className=" h-14 flex justify-center">
         {/* <!-- <img src="./images/logo.png" className="w-32 h-24 mt-10"> --> */}

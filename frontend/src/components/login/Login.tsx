@@ -1,22 +1,49 @@
 import './Login.css';
+import { useState } from 'react';
+import * as http from '../../service/axios';
+import { Link } from 'react-router-dom';
+import { useUserContext } from '../../context/UserContext';
+import Message from '../box/Show';
 export default function Login() {
+  const { user, login } = useUserContext()
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
-  console.log('login success')
+  const handleSubmit = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const data: any = await http.post('/user/login', { username, password });
+    if (data.user) {
+      document.cookie = `jwt=${data.token}`;
+      login();
+      console.log(data)
+    } else {
+      setMessage(data.message)
+    }
+  }
   return <>
-    {/* <html className="border-l" lang="en"> */}
     <div className="h-screen bg-gray-50 flex flex-col justify-center items-center">
-      <div className="bg-white border border-gray-300 w-80 py-8 flex items-center flex-col mb-3">
-        <h1 className="bg-no-repeat instagram-logo">ok</h1>
+      <div className="relative bg-white border border-gray-300 w-80 pb-8 pt-28 flex items-center flex-col mb-3">
+        {/* logo */}
+        <div className="bg-no-repeat instagram-logo absolute"></div>
         <form className="mt-8 w-64 flex flex-col">
           <input autoFocus
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            name='username'
             className="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
-            id="email" placeholder="Phone number, username, or email" type="text" />
+            id="email" placeholder="username" type="text" />
           <input autoFocus
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            name='password'
             className="text-xs w-full mb-4 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
             id="password" placeholder="Password" type="password" />
-          <a href="!" className="text-sm text-center bg-blue-300 text-white py-1 rounded font-medium" >
+          <button
+            onClick={handleSubmit}
+            className="text-sm text-center bg-blue-300 text-white py-1 rounded font-medium hover:bg-blue-400" >
             Log In
-          </a>
+          </button>
         </form>
         <div className="flex justify-evenly space-x-2 w-64 mt-4">
           <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
@@ -31,7 +58,7 @@ export default function Login() {
       </div>
       <div className="bg-white border border-gray-300 text-center w-80 py-4">
         <span className="text-sm">Don't have an account?</span>
-        <a href='/' className="text-blue-500 text-sm font-semibold">Sign up</a>
+        <Link to='/signup' className="text-blue-500 text-sm font-semibold">Sign up</Link>
       </div>
       <div className="mt-3 text-center">
         <span className="text-xs">Get the app</span>
@@ -41,5 +68,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    {message && <Message message={message} />}
   </>
 }

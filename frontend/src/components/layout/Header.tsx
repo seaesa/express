@@ -1,23 +1,10 @@
 import { useState } from 'react';
-import Instagram from '../../assets/Instagram-wordmark.svg';
-import Person from '../../assets/person.svg';
-// import {
-//   IoSearchOutline,
-//   IoHomeOutline,
-//   IoChatbubbleOutline,
-//   IoAddCircleOutline,
-//   IoCompassOutline,
-//   IoHeartOutline,
-//   IoPersonCircleOutline,
-//   IoBookmarkOutline,
-//   IoCogOutline,
-//   IoSyncOutline,
-// } from 'react-icons/io5';
-
-
+import Person from '../../assets/images/person.svg';
+import Express from '../../assets/images/express.png';
 
 
 import { HomeOutlined, MessageOutlined, PlusCircleOutlined, CompassOutlined, HeartOutlined, SearchOutlined, BookOutlined, SettingOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 export default function Header() {
   const [userOptionsOpen, setUserOptionsOpen] = useState<boolean>(false);
   return (
@@ -26,11 +13,14 @@ export default function Header() {
         className='container mx-auto p-4 flex items-center justify-between relative'
         style={{ maxWidth: 940 }}
       >
-        <img
-          src={Instagram}
-          alt='instagram wordmark'
-          className='h-7 -mb-2'
-        />
+        <Link to='/' className='absolute'>
+          <img
+            src={Express}
+            alt='express'
+            className='-mb-2 w-24 h-auto'
+          />
+        </Link>
+
         <div className='absolute left-1/2 -translate-x-1/2 bg-neutral-200 py-1.5 px-4 flex items-center rounded-md space-x-2'>
           <SearchOutlined className='text-neutral-400 text-xl' />
           <input
@@ -39,7 +29,7 @@ export default function Header() {
             placeholder='Search'
           />
         </div>
-        <div className='flex items-center space-x-5 text-2xl'>
+        <div className='flex items-center space-x-5 text-2xl ml-auto'>
           <HomeOutlined className='cursor-pointer' />
           <MessageOutlined className='cursor-pointer' />
           <PlusCircleOutlined className='cursor-pointer' />

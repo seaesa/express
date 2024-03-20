@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken')
 module.exports = new class userController {
   // @POST : /user/login
   async verifyLogin(req, res) {
-    const { username, email, password } = req.body;
-    const user = await User.findOne({ username, email, password });
-    if (!user) res.json({ user: null });
+    const { password, ...info } = req.body;
+    const user = await User.findOne({ password, ...info });
+    if (!user) res.json({ user: null, message: 'tên đăng nhập hoặc mật khẩu không đúng' });
     const token = jwt.sign({ username: user.username }, process.env.JWT_TOKEN_SECRET);
     res.json({ token, user });
   }

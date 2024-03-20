@@ -10,13 +10,6 @@ module.exports = {
       ...theme('colors'),
       auto: 'auto',
     }),
-    animation: {
-      none: 'none',
-      spin: 'spin 1s linear infinite',
-      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-      pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      bounce: 'bounce 1s infinite',
-    },
     aria: {
       busy: 'busy="true"',
       checked: 'checked="true"',
@@ -303,15 +296,7 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
-      sans: [
-        'ui-sans-serif',
-        'system-ui',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-        '"Noto Color Emoji"',
-      ],
+      sans: ['Poppins'],
       serif: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: [
         'ui-monospace',
@@ -569,6 +554,14 @@ module.exports = {
       0: '0',
       DEFAULT: '100%',
     },
+    animation: {
+      none: 'none',
+      spin: 'spin 1s linear infinite',
+      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+      pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      bounce: 'bounce 1s infinite',
+      trans: 'trans 0.5s ease-in-out, hide linear 1s 2s forwards',
+    },
     keyframes: {
       spin: {
         to: {
@@ -596,6 +589,22 @@ module.exports = {
           animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
         },
       },
+      trans: {
+        '0%': {
+          opacity: '0.4',
+          transform: 'translateX(-100px)',
+        },
+        '100%': {
+          opacity: '1',
+          transform: 'translateX(0)',
+        }
+      },
+      hide: {
+        '100%': {
+          opacity: 0,
+          transition: 'opacity 1s linear'
+        }
+      }
     },
     letterSpacing: {
       tighter: '-0.05em',

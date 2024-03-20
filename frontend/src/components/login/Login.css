@@ -4,10 +4,11 @@
 }
 
 .instagram-logo {
-  background-position: 0 -130px;
-  height: 51px;
-  width: 175px;
-  background-image: url(https://bit.ly/3v2LT17);
+  width: 145px;
+  height: 145px;
+  top: 0;
+  background-size: contain;
+  background-image: url('../../assets/images/express.png');
 }
 
 .facebook-logo {
