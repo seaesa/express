@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
+import Image from "../image/Image";
 
-export default function Post() {
+export default function Post({ post }: { post: any }) {
   return (
-    <Link to=''>
+    <Link to={`/post/${post.slug}`}>
       <div className="flex-1 text-center px-4 py-2 m-2">
-        <img
-          className="w-full"
-          src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-        />
+        <div className="w-full h-80">
+          <Image src={post.image} className="rounded-none outline-none outline-0" />
+        </div>
       </div>
     </Link>
   )

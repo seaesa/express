@@ -3,10 +3,9 @@ import Header from "../layout/Header";
 import LeftSide from "../layout/LeftSide";
 import RightSide from "../layout/RightSide";
 import Action from "../action";
-import { useUserContext } from "../../context/UserContext";
-import { useEffect } from "react";
+import { useUser } from "../../context/UserContext";
 export default function Template() {
-  const { user } = useUserContext();
+  const { user } = useUser();
   return (
     <>
       {user ?
@@ -14,7 +13,7 @@ export default function Template() {
           <Header />
           <div className="container mx-auto flex justify-between">
             <LeftSide />
-            <div className="flex flex-col flex-1 mr-10">
+            <div className="flex flex-col flex-1 mr-10 overflow-y-auto max-h-[100vh] no-scrollbar">
               <Action />
               <Outlet />
             </div>

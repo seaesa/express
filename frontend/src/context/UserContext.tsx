@@ -1,30 +1,41 @@
-import { ReactNode, createContext, useContext, useState } from "react";
-import { ThemeTypes } from "../types/verifyType";
+import { createContext, useContext, useState, useEffect } from "react";
+import { http } from "../service/axios";
+import { ResponseServer, User } from "../types";
+import { App, ConfigProvider } from "antd";
+import Cookies from "js-cookie";
+// const initContext: any = {
+//   user: null,
+// }
+const UserContext = createContext({} as any);
 
-const initContext: ThemeTypes = {
-  user: false,
-  login() { }
-}
-const UserContext = createContext({ ...initContext });
 
-export default function ThemeProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<boolean>(() => {
-    const value = `; ${document.cookie}`;
-    const parts: Array<any> = value.split(`; jwt=`);
-    const data = parts.pop().split(';').shift();
-    if (data) {
-      return true
-    } else return false
-  })
-  const login = () => {
-    setUser(true)
-  }
+const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [suggestUser, setSuggestUser] = useState<Array<User> | null>(null);
+  const [bool, setBool] = useState<boolean>(false)
+  useEffect(() => {
+    (async () => {
+      const token: any = Cookies.get('token')
+      if (token) {
+        const user: ResponseServer = await http.post(`users/current`, { token });
+        if (user.user) setUser(user.user);
+        else setUser(null)
+        if (user.suggestUser) setSuggestUser(user.suggestUser)
+      } else setUser(null)
+    })()
+  }, [bool]);
+
   return (
-    <UserContext.Provider value={{ user, login }}>
-      {children}
+    <UserContext.Provider value={{ user, setUser, bool, setBool, suggestUser }}>
+      <ConfigProvider >
+        <App>
+          {children}
+        </App>
+      </ConfigProvider>
     </UserContext.Provider>
   )
 }
+export default ThemeProvider
 
-export const useUserContext = () => useContext(UserContext)
+export const useUser = () => useContext(UserContext)
 

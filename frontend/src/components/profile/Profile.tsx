@@ -1,13 +1,30 @@
+import { useEffect, useMemo, useState } from "react";
+import { http } from '../../service/axios'
+
+import { useUser } from "../../context/UserContext";
+import Image from "../image/Image";
 import Post from "./Post";
+import { CameraOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
+  const { user } = useUser()
+  const [post, setPost] = useState<any>([]);
+  useEffect(() => {
+    (async () => {
+      const filterPost = [];
+      const post: any = await http.post('/posts/active', { id: user._id });
+      filterPost.push(...post.data.filter((post: any) => post.author !== null))
+      setPost(filterPost)
+    })()
+  }, [user._id])
   return (
     <div className="insta-clone">
       <div className="bg-gray-100 h-auto px-48">
         <div className="flex md:flex-row-reverse flex-wrap">
           <div className="w-full md:w-3/4 p-4 text-center">
             <div className="text-left pl-4 pt-3">
-              <span className="text-gray-700 text-2xl mr-2">HiraveSonali</span>
+              <span className="text-gray-700 text-2xl mr-2">{user.username}</span>
               <span className="text-base font-semibold text-gray-700 mr-2">
                 <button
                   className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-600 hover:border-transparent rounded"
@@ -21,9 +38,9 @@ export default function Profile() {
                   <svg
                     className="h-8 w-8"
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -64,18 +81,9 @@ export default function Profile() {
 
           <div className="w-full md:w-1/4 p-4 text-center">
             <div className="w-full relative md:w-3/4 text-center mt-8">
-              <button
-                className="flex rounded-full"
-                id="user-menu"
-                aria-label="User menu"
-                aria-haspopup="true"
-              >
-                <img
-                  className="h-40 w-40 rounded-full"
-                  src="https://scontent-muc2-1.cdninstagram.com/v/t51.2885-19/s150x150/58468664_291773768419326_7460980271920185344_n.jpg?_nc_ht=scontent-muc2-1.cdninstagram.com&amp;_nc_ohc=16Or2MWYINEAX9vLBW0&amp;oh=ada3818c35cb64180cf431d820d9dabe&amp;oe=5EF26035"
-                  alt=''
-                />
-              </button>
+              <div className="flex w-40 h-40">
+                <Image src={user.defaultAvatar} />
+              </div>
             </div>
           </div>
         </div>
@@ -87,8 +95,7 @@ export default function Profile() {
             <div
               className="relative shadow-xl mx-auto h-24 w-24 -my-12 border-white rounded-full overflow-hidden border-4"
             >
-              <img
-                className="object-cover w-full h-full"
+              <Image
                 src="https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
               />
             </div>
@@ -99,9 +106,7 @@ export default function Profile() {
             <div
               className="relative shadow-xl mx-auto h-24 w-24 -my-12 border-white rounded-full overflow-hidden border-4"
             >
-              <img
-                className="object-cover w-full h-full"
-                src="https://images.unsplash.com/photo-1456415333674-42b11b9f5b7b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
+              <Image src="https://images.unsplash.com/photo-1456415333674-42b11b9f5b7b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
               />
             </div>
             <h1 className="pt-16 text-base font-semibold text-gray-900">Travel</h1>
@@ -111,8 +116,7 @@ export default function Profile() {
             <div
               className="relative shadow-xl mx-auto h-24 w-24 -my-12 border-white rounded-full overflow-hidden border-4"
             >
-              <img
-                className="object-cover w-full h-full"
+              <Image
                 src="https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80"
               />
             </div>
@@ -123,8 +127,7 @@ export default function Profile() {
             <div
               className="relative shadow-xl mx-auto h-24 w-24 -my-12 border-white rounded-full overflow-hidden border-4"
             >
-              <img
-                className="object-cover w-full h-full"
+              <Image
                 src="https://images.unsplash.com/photo-1516834474-48c0abc2a902?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80"
               />
             </div>
@@ -135,8 +138,7 @@ export default function Profile() {
             <div
               className="relative shadow-xl mx-auto h-24 w-24 -my-12 border-white rounded-full overflow-hidden border-4"
             >
-              <img
-                className="object-cover w-full h-full"
+              <Image
                 src="https://images.unsplash.com/photo-1444021465936-c6ca81d39b84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
               />
             </div>
@@ -158,9 +160,9 @@ export default function Profile() {
                 <svg
                   className="h-6 w-6"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -184,9 +186,9 @@ export default function Profile() {
                 <svg
                   className="h-6 w-6"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -210,9 +212,9 @@ export default function Profile() {
                 <svg
                   className="h-6 w-6"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -234,9 +236,9 @@ export default function Profile() {
                 <svg
                   className="h-6 w-6"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -251,14 +253,15 @@ export default function Profile() {
             </div>
           </div>
         </div>
-
-        {/* <!--post images--> */}
-        <div className="grid grid-cols-3">
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-        </div>
+        {post.length > 0 ?
+          <div className="grid grid-cols-3">
+            {post.map((post: any, index: number) => <Post key={index} post={post} />)}
+          </div>
+          : <div className="flex flex-col text-lg justify-center items-center my-6">
+            <CameraOutlined style={{ fontSize: '90px' }} />
+            <Link to='/' className="text-blue-400 mt-6 hover:underline">no post click to add post</Link>
+          </div>
+        }
       </div>
     </div>
   )

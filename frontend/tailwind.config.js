@@ -561,8 +561,20 @@ module.exports = {
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
       trans: 'trans 0.5s ease-in-out, hide linear 1s 2s forwards',
+      fade: 'fadeIn .5s ease-out forwards'
     },
     keyframes: {
+      fadeIn: {
+        from: {
+          opacity: 0,
+          transform: 'scale(.5) translate(-50%, -50%)',
+        },
+        to: {
+          opacity: 1,
+          transform: 'scale(1) translate(-50%, -50%)',
+
+        }
+      },
       spin: {
         to: {
           transform: 'rotate(360deg)',

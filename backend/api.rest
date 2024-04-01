@@ -1,0 +1,75 @@
+# ------------GET------------
+
+### get all posts
+GET http://127.0.0.1:5000/api/posts 
+
+### get post detail
+GET http://127.0.0.1:5000/api/posts/xin-chao-quy-di
+
+### get all users
+GET http://127.0.0.1:5000/api/users
+
+### get user detail
+GET http://127.0.0.1:5000/api/users/@ngochai
+
+
+
+# -------------POST----------
+
+### login
+POST http://127.0.0.1:5000/api/users/login
+Content-Type: application/json
+
+{
+  "username":"ngochai",
+  "password":"cocainit"
+}
+
+### register
+POST http://127.0.0.1:5000/api/users/create
+Content-Type: application/json
+
+{
+  "username":"ngochai1",
+  "password":"cocainit"
+}
+
+### create post
+POST http://127.0.0.1:5000/api/posts/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDY2YmZlMzE1ZjAxM2Y0NWNmOWE0MSIsImlhdCI6MTcxMTg3MjUyMSwiZXhwIjoxNzExODc0MzIxfQ.H9XSxu_YXJ9-B4fXb7rXAGMXuwU2LD_3IP8t669bxjo
+
+{
+  "title": "xin chao quy di",
+  "url": "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg",
+  "author": "66066bfe315f013f45cf9a41"
+}
+
+### block user
+POST http://127.0.0.1:5000/api/users/block/:...
+Content-Type: application/json
+
+{
+  "id":"...."
+}
+
+
+# -----------------PUT,PATCH--------------
+
+### edit post
+PATCH  http://127.0.0.1:5000/api/posts/...
+
+
+
+# -----------------DELETE------------------
+
+### delete posts
+DELETE  http://127.0.0.1:5000/api/posts/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDY2YmZlMzE1ZjAxM2Y0NWNmOWE0MSIsImlhdCI6MTcxMTg3MjUyMSwiZXhwIjoxNzExODc0MzIxfQ.H9XSxu_YXJ9-B4fXb7rXAGMXuwU2LD_3IP8t669bxjo
+
+{
+  "id": "66091bc910747136ecacdbfe"
+}
+
+### block user

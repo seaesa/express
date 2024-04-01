@@ -1,10 +1,10 @@
 export default function LeftSide() {
   return (
-    <aside className="z-20 hidden w-80 overflow-y-auto  md:block flex-shrink-0">
-      <div className=" h-14 flex justify-center">
-        {/* <!-- <img src="./images/logo.png" className="w-32 h-24 mt-10"> --> */}
-      </div>
-      <div className=" mt-24 p-2 flex justify-center">
+    <aside className="hidden w-80 overflow-y-auto md:block flex-shrink-0">
+      {/* <div className=" h-14 flex justify-center"> */}
+      {/* <!-- <img src="./images/logo.png" className="w-32 h-24 mt-10"> --> */}
+      {/* </div> */}
+      <div className="mt-12 p-2 flex justify-center">
         <a href="/"
           className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
           <span className="inline-flex justify-center items-center ml-4">
@@ -20,9 +20,9 @@ export default function LeftSide() {
 
       </div>
 
-      {/* <!--          <div className=" my-5 flex justify-center">
-            <button className="inline-block py-2 w-4/5 px-4 text-gray-700 font-semibold text-sm no-underline border-b-1 border-gray-300 p-2 rounded-md font-medium  hover:bg-gray-100 focus:bg-gray-100 focus:shadow-outline">#Explore</button>
-        </div> --> */}
+      {/* <div className=" my-5 flex justify-center">
+        <button className="inline-block py-2 w-4/5 px-4 text-gray-700 font-semibold text-sm no-underline border-b-1 border-gray-300 p-2 rounded-md font-medium  hover:bg-gray-100 focus:bg-gray-100 focus:shadow-outline">#Explore</button>
+      </div> */}
 
       <div className=" my-2 p-2 flex justify-center">
         <a href="/"

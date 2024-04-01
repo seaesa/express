@@ -14,15 +14,16 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
+    "strictNullChecks": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve"
   },
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
     "./custom.d.ts"
-  ],
+  ]
 }

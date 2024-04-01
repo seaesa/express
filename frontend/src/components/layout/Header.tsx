@@ -1,12 +1,31 @@
 import { useState } from 'react';
-import Person from '../../assets/images/person.svg';
 import Express from '../../assets/images/express.png';
 
 
-import { HomeOutlined, MessageOutlined, PlusCircleOutlined, CompassOutlined, HeartOutlined, SearchOutlined, BookOutlined, SettingOutlined, ReloadOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  MessageOutlined,
+  PlusCircleOutlined,
+  CompassOutlined,
+  HeartOutlined,
+  SearchOutlined,
+  BookOutlined,
+  SettingOutlined,
+  ReloadOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
+import Image from '../image/Image';
+import Cookies from 'js-cookie';
 export default function Header() {
+  const { user, setBool } = useUser();
   const [userOptionsOpen, setUserOptionsOpen] = useState<boolean>(false);
+  const handleLogOut = (e: React.MouseEvent) => {
+    Cookies.remove('token')
+    Cookies.remove('refreshToken')
+    setBool((bool: boolean) => !bool)
+  }
   return (
     <header className='sticky top-0 border-b bg-white z-20'>
       <div
@@ -16,8 +35,7 @@ export default function Header() {
         <Link to='/' className='absolute'>
           <img
             src={Express}
-            alt='express'
-            className='-mb-2 w-24 h-auto'
+            alt='express' className='-mb-2 w-24 h-auto'
           />
         </Link>
 
@@ -38,33 +56,30 @@ export default function Header() {
           <div className='relative'>
             <div
               className={`rounded-full flex items-center justify-center h-7 w-7 ${userOptionsOpen ? 'outline outline-1' : ''
-                }`}
-            >
-              <img
-                src=''
-                alt='avatar'
-                className={`cursor-pointer rounded-full h-6 w-6 outline outline-white`}
+                }`} >
+              <Image
+                src={user.defaultAvatar}
                 onClick={() => setUserOptionsOpen((prev) => !prev)}
               />
             </div>
             {userOptionsOpen ? (
               <div className='absolute top-9 -left-48 shadow-md bg-white rounded-md'>
                 {[
-                  { icon: <Person />, label: 'Profile' },
+                  { icon: <UserOutlined />, label: 'Profile', link: `${user.idUser}` },
                   { icon: <BookOutlined />, label: 'Saved' },
                   { icon: <SettingOutlined />, label: 'Settings' },
                   { icon: <ReloadOutlined />, label: 'Switch Accounts' },
                 ].map((option) => (
-                  <div
-                    key={option.label}
-                    className='flex px-3 py-2.5 items-center space-x-2 w-56 cursor-pointer text-xl hover:bg-neutral-50 active:bg-neutral-200'
-                    onClick={() => setUserOptionsOpen(false)}
-                  >
-                    {option.icon}
-                    <p className='text-sm'>{option.label}</p>
-                  </div>
+                  <Link to={option.link || ''} key={option.label}>
+                    <div className='flex px-3 py-2.5 items-center space-x-2 w-56 cursor-pointer text-xl hover:bg-neutral-50 active:bg-neutral-200' >
+                      {option.icon}
+                      <p className='text-sm'>{option.label}</p>
+                    </div>
+                  </Link>
                 ))}
-                <div className='flex p-3 items-center space-x-2 w- cursor-pointer text-xl border-t hover:bg-neutral-50 active:bg-neutral-200'>
+                <div
+                  onClick={handleLogOut}
+                  className='flex p-3 items-center space-x-2 w- cursor-pointer text-xl border-t hover:bg-neutral-50 active:bg-neutral-200'>
                   <p className='text-sm'>
                     Log Out
                   </p>

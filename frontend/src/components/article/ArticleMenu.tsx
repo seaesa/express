@@ -1,12 +1,36 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, memo } from 'react';
+import { Button, Flex } from 'antd';
+import { http } from '../../service/axios';
+import { useUser } from '../../context/UserContext';
 
 const ArticleMenu = ({
   open,
   setOpen,
+  id,
+  setLoading,
+  setEdit,
+  post
 }: {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  setLoading: Dispatch<SetStateAction<boolean>>,
+  setEdit: Dispatch<SetStateAction<boolean>>,
+  id: string,
+  post: any
 }) => {
+  const { setBool, user } = useUser()
+  const handleDeletePost = async (e: React.MouseEvent) => {
+    setOpen(false);
+    setLoading(true);
+    await http.delete('/posts/delete', {
+      data: { id }
+    })
+    setBool((bool: boolean) => !bool);
+    setLoading(false)
+  }
+  const handleEdit = async (e: React.MouseEvent) => {
+    setEdit(true)
+  }
   return open ? (
     <>
       <div
@@ -14,28 +38,33 @@ const ArticleMenu = ({
         onClick={() => setOpen(false)}
       ></div>
       <div className='fixed w-96 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white z-50 rounded-xl overflow-hidden text-sm shadow'>
-        {[
-          'Report',
-          'Unfollow',
-          'Go to post',
-          'Share to...',
-          'Copy link',
-          'Embed',
-          'Cancel',
-        ].map((option) => (
-          <p
-            className={`cursor-pointer text-center p-3.5 border-b border-neutral-200 ${['Report', 'Unfollow'].includes(option)
-              ? 'text-red-500 font-medium'
-              : ''
-              } active:bg-neutral-200`}
-            onClick={() => setOpen(false)}
-          >
-            {option}
-          </p>
-        ))}
+        <Flex gap='small' vertical>
+          {(post.author._id === user._id) ?
+            <>
+              <Button
+                onClick={handleDeletePost}
+                type='text' danger>Delete</Button>
+              <Button
+                onClick={handleEdit}
+                type='text'>Edit</Button>
+              <Button type='text'>Go to post</Button>
+              <Button type='text'>Share to...</Button>
+              <Button type='text'>Copy link</Button>
+              <Button type='text'>Embed</Button>
+            </>
+            : <>
+              <Button type='text' danger>Report</Button>
+              <Button type='text'>Unfollow</Button>
+              <Button type='text'>Go to post</Button>
+              <Button type='text'>Share to...</Button>
+              <Button type='text'>Copy link</Button>
+              <Button type='text'>Embed</Button>
+            </>
+          }
+        </Flex>
       </div>
     </>
   ) : null;
 };
 
-export default ArticleMenu;
+export default memo(ArticleMenu);

@@ -5,11 +5,11 @@ const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug)
 
 // Schema
-const ArticleSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   title: String,
-  description: String,
+  image: String,
   slug: { type: String, slug: 'title', slugPaddingSize: 1, unique: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-}, { timestamps: true });
+}, { timestamps: true })
 
-module.exports = mongoose.model('Article', ArticleSchema)
+module.exports = mongoose.model('Post', PostSchema)
