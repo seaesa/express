@@ -1,8 +1,6 @@
 module.exports = new class siteController {
+  // @GET /api
   home(req, res) {
-    res.send('sucess')
-  }
-  error(req, res) {
-    res.json({ error: true, message: 'route not match' })
+    res.send('welcome to development enviroment')
   }
 }

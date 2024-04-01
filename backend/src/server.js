@@ -21,13 +21,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// connect DB
-const DB = require('./api/db/mongoose');
-DB();
-
 // config route
 const router = require('./api/routes/routes')
 app.use('/api', router)
 
-// start server
-app.listen(process.env.PORT, () => console.log(`app running on address ${process.env.URL}${process.env.PORT}`));
+// connect DB and start server
+const DB = require('./api/db/mongoose');
+DB(app);

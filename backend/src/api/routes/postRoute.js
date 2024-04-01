@@ -1,15 +1,16 @@
+// module
 const express = require('express');
-const route = express.Router();
-const postController = require('../controllers/postController');
+const router = express.Router();
 const async = require('express-async-handler');
+
+const postController = require('../controllers/postController');
 const { authenUser } = require('../middleware/auth');
 
-route.patch('/', async(postController.putArticle))
-route.post('/active', postController.getPostCurrent)
+// router.post('/active', postController.getPostCurrent)
+router.patch('/:id', authenUser, async(postController.patchPost))
+router.delete('/delete', authenUser, async(postController.deletePost))
+router.post('/create', authenUser, async(postController.createPost))
+router.get('/:id', async(postController.postDetail))
+router.get('/', async(postController.getListPosts))
 
-route.delete('/delete', authenUser, async(postController.deletePost))
-route.post('/create', authenUser, async(postController.createPost))
-route.get('/:id', postController.postDetail)
-route.get('/', async(postController.getListPosts))
-
-module.exports = route
+module.exports = router

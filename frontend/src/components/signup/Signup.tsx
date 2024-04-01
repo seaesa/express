@@ -3,7 +3,7 @@ import { http } from '../../service/axios'
 import { useUser } from '../../context/UserContext';
 import Loading from '../loading';
 import { Link } from 'react-router-dom';
-import { App } from 'antd';
+import { App, Button, Form, Input } from 'antd';
 import Cookies from 'js-cookie';
 export default function Signup() {
   const { setUser } = useUser();
@@ -13,11 +13,8 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false)
   const handleSubmit = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
-      return false
-    }
-    if (confirmPassword === password) {
+    if (!username.trim() || !password.trim() || !confirmPassword.trim()) return
+    else if (confirmPassword === password) {
       setLoading(true)
       const data: any = await http.post('/auth/register', { username, password });
       if (data.user) {
@@ -48,8 +45,30 @@ export default function Signup() {
         <div className="relative bg-white border border-gray-300 w-80 pb-8 pt-28 flex items-center flex-col mb-3">
           {/* logo */}
           <div className="bg-no-repeat instagram-logo absolute"></div>
-
-          <form className="mt-8 w-64 flex flex-col">
+          <Form className="mt-8 w-64 flex flex-col">
+            <Form.Item
+              name='username' rules={[{ required: true }]}>
+              <Input
+                onChange={(e) => setUsername(e.target.value)}
+                value={username} name='username' placeholder="username" />
+            </Form.Item>
+            <Form.Item
+              name='password' rules={[{ required: true }]}>
+              <Input.Password
+                onChange={(e) => setPassword(e.target.value)}
+                value={password} name='password' placeholder="password" />
+            </Form.Item>
+            <Form.Item
+              name='confirmPassword' rules={[{ required: true }]}>
+              <Input.Password
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword} name='confirmPassword' placeholder="confirm password" />
+            </Form.Item>
+            <Form.Item>
+              <Button onClick={handleSubmit} className='w-full' type='primary' htmlType="submit">Submit</Button>
+            </Form.Item>
+          </Form>
+          {/* <form className="mt-8 w-64 flex flex-col">
             <input autoFocus
               onChange={(e) => setUsername(e.target.value)}
               value={username}
@@ -74,7 +93,7 @@ export default function Signup() {
             >
               Sign Up
             </button>
-          </form>
+          </form> */}
           <div className="flex justify-evenly space-x-2 w-64 mt-4">
             <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
             <span className="flex-none uppercase text-xs text-gray-400 font-semibold">or</span>

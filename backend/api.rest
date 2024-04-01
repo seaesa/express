@@ -13,11 +13,10 @@ GET http://127.0.0.1:5000/api/users
 GET http://127.0.0.1:5000/api/users/@ngochai
 
 
-
 # -------------POST----------
 
 ### login
-POST http://127.0.0.1:5000/api/users/login
+POST http://127.0.0.1:5000/api/auth/login
 Content-Type: application/json
 
 {
@@ -26,7 +25,7 @@ Content-Type: application/json
 }
 
 ### register
-POST http://127.0.0.1:5000/api/users/create
+POST http://127.0.0.1:5000/api/auth/create
 Content-Type: application/json
 
 {
@@ -57,7 +56,13 @@ Content-Type: application/json
 # -----------------PUT,PATCH--------------
 
 ### edit post
-PATCH  http://127.0.0.1:5000/api/posts/...
+PATCH  http://127.0.0.1:5000/api/posts/
+Content-Type: application/json
+Authorization: Bearer 
+{
+  url:
+  title:
+}
 
 
 
@@ -70,6 +75,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDY2YmZlM
 
 {
   "id": "66091bc910747136ecacdbfe"
-}
-
-### block user
+} 

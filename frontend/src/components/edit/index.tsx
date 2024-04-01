@@ -4,22 +4,49 @@ import Input from "antd/es/input/Input"
 import Icon from "../icons/Icon"
 import TextArea from "antd/es/input/TextArea"
 import { useRef, useState } from "react"
+import { cloudinary, http } from "../../service/axios"
+import { useUser } from "../../context/UserContext"
+import Loading from "../loading"
 
 const Edit = ({
   post,
   setEdit,
+  setOpen,
+  setLoading
 }: {
   post: any,
-  setEdit: React.Dispatch<React.SetStateAction<boolean>>
+  setEdit: React.Dispatch<React.SetStateAction<boolean>>,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 }) => {
+  const { setBool } = useUser()
   const [title, setTitle] = useState<string>(post.title);
   const [image, setImage] = useState<string>('');
-  const fileRef = useRef(null)
-  const handleSubmit = (e: React.MouseEvent) => {
-
+  const fileRef = useRef<any>(null)
+  const handleSubmit = async (e: React.MouseEvent) => {
+    setLoading(true)
+    setOpen(false)
+    setEdit(false)
+    let newUrl
+    if (!!fileRef.current.ariaChecked === true) {
+      const { url } = await cloudinary.postForm('/image/upload', {
+        file: (fileRef.current as any).files[0],
+        upload_preset: 'dy7el9da',
+        cloud_name: 'ddsypvnqg',
+        folder: 'express/image',
+      })
+      newUrl = url
+    }
+    await http.patch(`/posts/${post._id}`, {
+      url: newUrl || post.image,
+      title
+    })
+    setBool((bool: boolean) => !bool)
+    setLoading(false)
   }
-  const handleChangeImage = (e: any) => {
+  const handleChangeImage = (e: React.ChangeEvent) => {
     const url = URL.createObjectURL((fileRef.current as any).files[0])
+    fileRef.current.ariaChecked = true
     setImage(url)
   }
   return (
@@ -42,6 +69,7 @@ const Edit = ({
           <div className="flex h-full">
             <div className="w-1/2 bg-gray-950">
               <input
+                aria-checked={false}
                 onChange={handleChangeImage}
                 ref={fileRef}
                 type="file" hidden name="image" />

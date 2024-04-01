@@ -11,6 +11,7 @@ const PostDetail = (
     setShow: React.Dispatch<React.SetStateAction<boolean>>,
     post: any
   }) => {
+
   return (
     <>
       <div className="bg-gray-500 bg-opacity-20 z-50 fixed top-0 left-0 right-0 bottom-0">

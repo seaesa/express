@@ -52,6 +52,5 @@ server.interceptors.response.use(res => res, async (error) => {
   return Promise.reject(error)
 })
 
-
 export const http = new HTTP(server)
 export const cloudinary = new HTTP(cloud)

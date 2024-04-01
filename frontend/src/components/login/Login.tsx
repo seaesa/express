@@ -1,5 +1,5 @@
 //module
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from "antd";
 // components
@@ -18,24 +18,27 @@ const Login = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // handle
   const handleSubmit = async (e: React.MouseEvent) => {
-    setLoading(true)
-    e.preventDefault();
-    const data: any = await http.post('/auth/login', { username, password });
-    if (data.user) {
-      // Cookies.set('user', data.user._id.toString(), { expires: new Date(new Date().getTime() + 15 * 60 * 1000) })
-      Cookies.set('token', data.token, { expires: new Date(new Date().getTime() + 15 * 60 * 2000) })
-      Cookies.set('refreshToken', data.refeshToken)
-      setUser(data.user)
-      setLoading(false)
-      message.success({
-        content: 'success',
-      })
-    } else {
-      modal.error({
-        title: 'Error',
-        content: data.message,
-      });
-      setLoading(false)
+    if (!username || !password) return
+    else {
+      setLoading(true)
+      e.preventDefault();
+      const data: any = await http.post('/auth/login', { username, password });
+      if (data.user) {
+        // Cookies.set('user', data.user._id.toString(), { expires: new Date(new Date().getTime() + 15 * 60 * 1000) })
+        Cookies.set('token', data.token, { expires: new Date(new Date().getTime() + 15 * 60 * 2000) })
+        Cookies.set('refreshToken', data.refeshToken)
+        setUser(data.user)
+        setLoading(false)
+        message.success({
+          content: 'success',
+        })
+      } else {
+        modal.error({
+          title: 'Error',
+          content: data.message,
+        });
+        setLoading(false)
+      }
     }
   }
   return (
@@ -47,13 +50,15 @@ const Login = () => {
             <Form className='mt-8 w-64 flex flex-col'>
               <Form.Item
                 name='username'
-                rules={[{ required: true, message: 'Please input your username!' }]} >
+                rules={[{ required: true }]} >
                 <Input
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   placeholder='username' name='username' />
               </Form.Item>
-              <Form.Item rules={[{ required: true, message: 'Please input your password!' }]} >
+              <Form.Item
+                name='password'
+                rules={[{ required: true }]} >
                 <Input.Password
                   value={password}
                   onChange={e => setPassword(e.target.value)}

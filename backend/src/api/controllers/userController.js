@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const jwt = require('jsonwebtoken')
 class userController {
 
-  // @GET: /user/login
+  // @GET: /users/current
   async currentUser(req, res) {
     const { token } = req.body;
     const userToken = jwt.verify(token, process.env.JWT_TOKEN_SECRET)
@@ -15,6 +15,7 @@ class userController {
     }).find(user => user.id === userToken.id);
     response(res, { user: currentUsers, suggestUser: suggestUser.sort(() => Math.random() - 0.5) });
   }
+  // @GET /users/:id
   async getUser(req, res) {
     const { id } = req.params;
     const data = await User.findOne({ idUser: id.slice(1) });

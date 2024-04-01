@@ -1,9 +1,11 @@
 const express = require('express');
-const route = express.Router()
-const userController = require('../controllers/userController');
+const router = express.Router()
 const async = require('express-async-handler');
 
-route.post('/current', async(userController.currentUser));
-route.get('/:id', async(userController.getUser));
-route.get('/', async(userController.getListUser));
-module.exports = route;
+const userController = require('../controllers/userController');
+
+router.post('/current', async(userController.currentUser));
+router.get('/:id', async(userController.getUser));
+router.get('/', async(userController.getListUser));
+
+module.exports = router;

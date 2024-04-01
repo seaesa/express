@@ -93,7 +93,7 @@ const Article = ({ post }: { post: any }) => {
         </div>
       </div>
       {show && <PostDetail setShow={setShow} post={post} />}
-      {edit && <Edit setEdit={setEdit} post={post} />}
+      {edit && <Edit setEdit={setEdit} post={post} setOpen={setContextMenuOpen} setLoading={setLoading} />}
       {loading && <Loading />}
     </>
   )
