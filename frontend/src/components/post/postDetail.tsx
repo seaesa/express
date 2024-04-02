@@ -1,19 +1,23 @@
-import { AliwangwangOutlined, EllipsisOutlined, HeartOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons"
-import { Avatar, Image } from "antd"
-import Icon from "../icons/Icon"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { http } from "../../service/axios"
+import { Avatar, Image } from "antd"
+import { AliwangwangOutlined, EllipsisOutlined, HeartOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons"
 
-const PostDetail = () => {
+import Icon from "../icons/Icon"
+import { http } from "../../service/axios"
+import { Post } from "../../types"
+
+const PostDetail: React.FC = (): JSX.Element => {
   const { post } = useParams();
-  const [posts, setPosts] = useState<any>(null)
+  const [posts, setPosts] = useState<Post | null>(null)
+
   useEffect(() => {
     (async () => {
       const postDetail: any = await http.get(`posts/${post}`);
       setPosts(postDetail.data)
     })()
   }, [post])
+
   return (
     <>
       {posts &&

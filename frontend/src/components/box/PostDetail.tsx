@@ -1,16 +1,22 @@
-import { AliwangwangOutlined, CloseOutlined, EllipsisOutlined, HeartOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons"
-import { Avatar, Image } from "antd"
-import Icon from "../icons/Icon"
 import { memo } from "react"
+import { Avatar, Image } from "antd"
+import {
+  AliwangwangOutlined,
+  CloseOutlined,
+  EllipsisOutlined,
+  HeartOutlined,
+  SendOutlined,
+  SmileOutlined
+} from "@ant-design/icons"
 
-const PostDetail = (
-  {
-    setShow,
-    post
-  }: {
-    setShow: React.Dispatch<React.SetStateAction<boolean>>,
-    post: any
-  }) => {
+import Icon from "../icons/Icon"
+import { Post } from "../../types"
+
+interface PostDetailTypes {
+  setShow: React.Dispatch<React.SetStateAction<boolean>>,
+  post: Post
+}
+const PostDetail: React.FC<PostDetailTypes> = ({ setShow, post }): JSX.Element => {
 
   return (
     <>

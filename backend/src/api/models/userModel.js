@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-updater');
-
+const crypto = require('crypto');
+const bcrypt = require('bcrypt')
 mongoose.plugin(slug);
 
 const UserSchema = new mongoose.Schema({
   idUser: { type: String, slug: 'username', transform: v => `@${v}` },
-  username: String,
+  username: { type: String },
   displayName: String,
   email: String,
   gender: ['male', 'female'],
@@ -13,5 +14,13 @@ const UserSchema = new mongoose.Schema({
   avatar: String,
   password: String,
   phone: Number,
-}, { timestamps: true })
+}, { timestamps: true });
+
+UserSchema.pre('save', async function (next) {
+  const user = await mongoose.model('User', UserSchema).findOne({ username: this.username })
+  if (user) {
+    this.username = `${this.username}${crypto.randomBytes(2).toLocaleString('hex')}`
+  }
+  next()
+})
 module.exports = mongoose.model('User', UserSchema)

@@ -1,45 +1,52 @@
 import { useRef, useState } from "react"
-import { http, cloudinary } from "../../service/axios";
+import { CloseOutlined, SendOutlined } from "@ant-design/icons";
+import { Button, Input } from "antd";
 
+import { http, cloudinary } from "../../service/axios";
 import { useUser } from "../../context/UserContext";
 import Loading from "../loading";
-export default function Post() {
+import Image from "../image/Image";
+
+const Post: React.FC = (): JSX.Element => {
   const { user, setBool } = useUser();
-  const imageRef = useRef<any>(null);
+  const imageRef = useRef<HTMLInputElement | null>(null);
   const [image, setImage] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const handleAddPost = async (e: any) => {
-    setLoading(true);
+
+  const handleAddPost = async (e: React.MouseEvent): Promise<void> => {
     e.preventDefault();
+    setLoading(true);
     const { url } = await cloudinary.postForm('/image/upload', {
       file,
       upload_preset: 'dy7el9da',
       cloud_name: 'ddsypvnqg',
       folder: 'express/image',
     });
-    await http.post('/posts/create', { url, title, author: user._id });
+    await http.post('/posts/create', { url, title, author: user!._id });
     setBool((bool: any) => !bool);
     setTitle('');
     setImage('');
     setLoading(false)
   }
+
   return (
     <>
-      <form
-        method="post" encType="multipart/form-data"
-        className="bg-white shadow rounded-lg mb-6 p-4 w-full md:w-5/6">
-        <textarea
+      <div className="bg-white shadow-md rounded-lg mb-6 p-4 w-full md:w-5/6">
+        <Input.TextArea
           onChange={e => setTitle(e.target.value)}
-          value={title}
-          name="message" placeholder="Type something..." className=" focus:outline-none  w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"></textarea>
-        {!!image &&
-          <div className="overflow-y-auto max-h-96 no-scrollbar">
-            <img src={image} alt="" className="w-full h-full" />
+          value={title} name="message"
+          placeholder="Content..." className="border-none"></Input.TextArea>
+        {image &&
+          <div className="overflow-y-auto max-h-96 no-scrollbar relative">
+            <CloseOutlined
+              onClick={e => setImage('')}
+              className="text-lg absolute top-2 right-2 cursor-pointer hover:text-white hover:scale-125 transition-all" />
+            <Image src={image} className="rounded-none" />
           </div>
         }
-        <footer className="flex justify-between mt-2">
+        <div className="flex justify-between mt-4">
           <div className="flex gap-2">
             <input
               onChange={(e: React.ChangeEvent) => {
@@ -49,7 +56,7 @@ export default function Post() {
               ref={imageRef}
               type="file" name="image" hidden id="" />
             <span
-              onClick={() => imageRef.current.click()}
+              onClick={() => imageRef.current!.click()}
               className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
               <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="css-i6dzq1">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -70,17 +77,17 @@ export default function Post() {
               </svg>
             </span>
           </div>
-          <button
+          <Button
+            disabled={(title && image) ? false : true}
             onClick={handleAddPost}
-            className="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg">Send
-            <svg className="ml-1" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-        </footer>
-      </form>
+            type="primary" icon={<SendOutlined rotate={-45} />} >
+            Send
+          </Button>
+        </div>
+      </div>
       {loading && <Loading />}
     </>
   )
 }
+
+export default Post

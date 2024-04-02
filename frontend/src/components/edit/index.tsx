@@ -3,31 +3,29 @@ import { Avatar, Button, Image } from "antd"
 import Input from "antd/es/input/Input"
 import Icon from "../icons/Icon"
 import TextArea from "antd/es/input/TextArea"
-import { useRef, useState } from "react"
+import { memo, useRef, useState } from "react"
 import { cloudinary, http } from "../../service/axios"
 import { useUser } from "../../context/UserContext"
-
-const Edit = ({
-  post,
-  setEdit,
-  setOpen,
-  setLoading
-}: {
-  post: any,
+import { Post } from "../../types"
+interface EditTypes {
+  post: Post,
   setEdit: React.Dispatch<React.SetStateAction<boolean>>,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-}) => {
+}
+const Edit: React.FC<EditTypes> = ({ post, setEdit, setOpen, setLoading }): JSX.Element => {
   const { setBool } = useUser()
+
   const [title, setTitle] = useState<string>(post.title);
-  const [image, setImage] = useState<string>('');
-  const fileRef = useRef<any>(null)
-  const handleSubmit = async (e: React.MouseEvent) => {
+  const [image, setImage] = useState<string>(post.image);
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const handleSubmit = async () => {
     setLoading(true)
     setOpen(false)
     setEdit(false)
     let newUrl
-    if (fileRef.current.ariaChecked === 'true') {
+    if ((fileRef.current as HTMLInputElement).ariaChecked === 'true') {
       const { url } = await cloudinary.postForm('/image/upload', {
         file: (fileRef.current as any).files[0],
         upload_preset: 'dy7el9da',
@@ -43,9 +41,9 @@ const Edit = ({
     setBool((bool: boolean) => !bool)
     setLoading(false)
   }
-  const handleChangeImage = (e: React.ChangeEvent) => {
-    const url = URL.createObjectURL((fileRef.current as any).files[0])
-    fileRef.current.ariaChecked = true
+  const handleChangeImage = () => {
+    const url = URL.createObjectURL((fileRef.current as any).files[0]) as string
+    (fileRef.current as HTMLInputElement).ariaChecked = 'true'
     setImage(url)
   }
   return (
@@ -73,7 +71,7 @@ const Edit = ({
                 type="file" hidden name="image" />
               <Image
                 onClick={e => (fileRef.current as any).click()}
-                src={image ? image : post.image}
+                src={image}
                 preview={false}
                 className="object-contain object-center hover:opacity-75 cursor-pointer" height='100%' width='100%' />
             </div>
@@ -106,4 +104,4 @@ const Edit = ({
     </>
   )
 }
-export default Edit
+export default memo(Edit)

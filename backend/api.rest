@@ -25,11 +25,11 @@ Content-Type: application/json
 }
 
 ### register
-POST http://127.0.0.1:5000/api/auth/create
+POST http://127.0.0.1:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "username":"ngochai1",
+  "username":"ngochai123",
   "password":"cocainit"
 }
 

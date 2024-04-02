@@ -11,19 +11,21 @@ import Profile from "./components/profile/Profile";
 import ProtectedRoute from "./components/protected";
 import Post from "./components/templates/Post";
 import PostDetail from "./components/post/postDetail";
+import Verify from "./components/verifyUser/verify";
 
-const App = () => {
-
+const App: React.FC = (): JSX.Element => {
   return (
     <Routes>
-      <Route element={<Template />}>
-        <Route path="/" element={<Home />} />
-      </Route>
-      <Route element={<TemplateProfile />}>
-        <Route path="/:user" element={<Profile />} />
-      </Route>
-      <Route element={<Post />}>
-        <Route path="/post/:post" element={<PostDetail />} />
+      <Route element={<Verify />}>
+        <Route element={<Template />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route element={<TemplateProfile />}>
+          <Route path="/:idUser" element={<Profile />} />
+        </Route>
+        <Route element={<Post />}>
+          <Route path="/post/:post" element={<PostDetail />} />
+        </Route>
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/login" element={<Login />} />
@@ -32,4 +34,5 @@ const App = () => {
     </Routes>
   );
 }
+
 export default App

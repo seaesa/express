@@ -1,6 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
-
 
 class HTTP {
   private http: AxiosInstance
@@ -42,7 +41,7 @@ const cloud = axios.create({
 })
 
 // config http server
-server.interceptors.request.use((config) => {
+server.interceptors.request.use((config: InternalAxiosRequestConfig<any>): InternalAxiosRequestConfig<any> => {
   config.headers.Authorization = `Bearer ${Cookies.get('token')}`
   return config
 })

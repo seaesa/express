@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { App, Button, Form, Image, Input } from 'antd';
+import Cookies from 'js-cookie';
+
 import { http } from '../../service/axios'
 import { useUser } from '../../context/UserContext';
 import Loading from '../loading';
-import { Link } from 'react-router-dom';
-import { App, Button, Form, Input } from 'antd';
-import Cookies from 'js-cookie';
-export default function Signup() {
+import Express from '../../assets/images/express.png'
+
+const SignUp: React.FC = (): JSX.Element => {
   const { setUser } = useUser();
   const { modal, message } = App.useApp()
+
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false)
-  const handleSubmit = async (e: React.MouseEvent) => {
+
+  const handleSubmit = async () => {
     if (!username.trim() || !password.trim() || !confirmPassword.trim()) return
     else if (confirmPassword === password) {
       setLoading(true)
@@ -32,34 +37,29 @@ export default function Signup() {
         })
         setLoading(false)
       }
-    } else {
+    } else
       modal.error({
         title: 'Error',
         content: 'mật khẩu không trùng khớp'
       })
-    }
   }
   return (
     <>
       <div className="h-screen bg-gray-50 flex flex-col justify-center items-center">
-        <div className="relative bg-white border border-gray-300 w-80 pb-8 pt-28 flex items-center flex-col mb-3">
-          {/* logo */}
-          <div className="bg-no-repeat instagram-logo absolute"></div>
-          <Form className="mt-8 w-64 flex flex-col">
-            <Form.Item
-              name='username' rules={[{ required: true }]}>
+        <div className="rounded-lg shadow-lg relative bg-white w-80 pb-8 flex items-center flex-col mb-3">
+          <Image src={Express} preview={false} style={{ width: '145px', height: '145px' }} />
+          <Form className="w-64 flex flex-col">
+            <Form.Item name='username' rules={[{ required: true }]}>
               <Input
                 onChange={(e) => setUsername(e.target.value)}
                 value={username} name='username' placeholder="username" />
             </Form.Item>
-            <Form.Item
-              name='password' rules={[{ required: true }]}>
+            <Form.Item name='password' rules={[{ required: true }]}>
               <Input.Password
                 onChange={(e) => setPassword(e.target.value)}
                 value={password} name='password' placeholder="password" />
             </Form.Item>
-            <Form.Item
-              name='confirmPassword' rules={[{ required: true }]}>
+            <Form.Item name='confirmPassword' rules={[{ required: true }]}>
               <Input.Password
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword} name='confirmPassword' placeholder="confirm password" />
@@ -68,56 +68,14 @@ export default function Signup() {
               <Button onClick={handleSubmit} className='w-full' type='primary' htmlType="submit">Submit</Button>
             </Form.Item>
           </Form>
-          {/* <form className="mt-8 w-64 flex flex-col">
-            <input autoFocus
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-              name='username'
-              className="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
-              id="email" placeholder="username" type="text" required />
-            <input autoFocus
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              name='password'
-              className="text-xs w-full mb-4 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
-              id="password" placeholder="Password" type="password" required />
-            <input autoFocus
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-              name='confirmPassword'
-              className="text-xs w-full mb-4 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
-              id="password" placeholder="Password" type="password" required />
-            <button
-              onClick={handleSubmit}
-              className={`text-sm text-center bg-blue-300 text-white py-1 rounded font-medium ${(username && password && confirmPassword) ? 'bg-blue-500 hover:bg-blue-400 cursor-pointer' : 'cursor-auto'}`}
-            >
-              Sign Up
-            </button>
-          </form> */}
-          <div className="flex justify-evenly space-x-2 w-64 mt-4">
-            <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
-            <span className="flex-none uppercase text-xs text-gray-400 font-semibold">or</span>
-            <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
-          </div>
-          <button className="mt-4 flex">
-            <div className="bg-no-repeat facebook-logo mr-1"></div>
-            <span className="text-xs text-blue-900 font-semibold">Log in with Facebook</span>
-          </button>
-          <a href='/' className="text-xs text-blue-900 mt-4 cursor-pointer -mb-4">Forgot password?</a>
         </div>
-        <div className="bg-white border border-gray-300 text-center w-80 py-4">
-          <span className="text-sm">You have an account?</span>
+        <div className="bg-white text-center w-80 py-4 rounded-lg shadow-lg">
+          <span className="text-sm mx-2">You have an account?</span>
           <Link to='/login' className="text-blue-500 text-sm font-semibold">Login</Link>
-        </div>
-        <div className="mt-3 text-center">
-          <span className="text-xs">Get the app</span>
-          <div className="flex mt-3 space-x-2">
-            <div className="bg-no-repeat apple-store-logo"></div>
-            <div className="bg-no-repeat google-store-logo"></div>
-          </div>
         </div>
       </div>
       {loading && <Loading />}
     </>
   )
 }
+export default SignUp

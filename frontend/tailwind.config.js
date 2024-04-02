@@ -296,7 +296,7 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
-      sans: ['Poppins'],
+      impro: ["Pacifico"],
       serif: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: [
         'ui-monospace',

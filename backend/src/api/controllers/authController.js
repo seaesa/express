@@ -37,7 +37,8 @@ class authController {
     let user = await userModel.findOne({ username });
     if (user) response(res, { message: 'tên đăng nhập đã tồn tại' });
     else {
-      const hash = await bcrypt.hash(password, 10);
+      const salt = bcrypt.genSaltSync(10)
+      const hash = bcrypt.hashSync(password, salt);
       user = await userModel.create({ username, email, password: hash, avatar: image });
       const { token, refreshToken } = generateToken(user.id)
       response(res, { user, token, refreshToken })
@@ -45,6 +46,20 @@ class authController {
   }
   // @POST : /auth/google
   async google(req, res) {
+    const { username, displayName, email, image, phone } = req.body;
+    const newUsername = unidecode(username).toLocaleLowerCase().split(' ').join('');
+    const user = await userModel.findOne({ username: newUsername, email })
+    if (user) {
+      const { token, refreshToken } = generateToken(user.id)
+      response(res, { user, token, refreshToken })
+    } else {
+      const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
+      const { token, refreshToken } = generateToken(user.id)
+      response(res, { user, token, refreshToken })
+    }
+  }
+  // @POST : /auth/facebook
+  async facebook(req, res) {
     const { username, displayName, email, image, phone } = req.body;
     const newUsername = unidecode(username).toLocaleLowerCase().split(' ').join('');
     const user = await userModel.findOne({ username: newUsername, email })

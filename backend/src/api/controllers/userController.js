@@ -15,6 +15,11 @@ class userController {
     }).find(user => user.id === userToken.id);
     response(res, { user: currentUsers, suggestUser: suggestUser.sort(() => Math.random() - 0.5) });
   }
+  // @GET: /users/suggest
+  async suggestUser(req, res) {
+    const users = await User.find({}).limit(10)
+    response(res, { suggestUser: users.sort(() => Math.random() - 0.5) });
+  }
   // @GET /users/:id
   async getUser(req, res) {
     const { id } = req.params;

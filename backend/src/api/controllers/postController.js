@@ -1,23 +1,18 @@
 const response = require('../../config/response')
 const postModel = require('../models/postModel');
-const userModel = require('../models/userModel');
 
 class postController {
   // @GET : /posts
   async getListPosts(req, res) {
     const data = await postModel.find({}).populate('author');
     res.json({ data })
-    //   const data = await post.aggregate([{ $sample: { size: 10 } }]);
-    // res.json({ data })
   }
   // @GET : /posts/active
   async getPostCurrent(req, res) {
     const { id } = req.body
-    const data = await postModel.find({}).populate({
-      path: 'author',
-      match: { _id: id }
-    });
-    res.json({ data })
+    const data = await postModel.find({}).populate('author')
+    const user = data.filter(data => data.author.id === id)
+    res.json({ data: user })
   }
 
   // @GET /posts/:id

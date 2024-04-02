@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
-export default function ProtectedRoute() {
+const ProtectedRoute: React.FC = (): JSX.Element => {
   const { user } = useUser();
-
   return (
     <>
       {user ? <Navigate to='/' /> : <Outlet />}
     </>
   )
 }
+export default ProtectedRoute

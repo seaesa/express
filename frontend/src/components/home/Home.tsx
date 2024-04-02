@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+
 import { http } from '../../service/axios'
 import Article from "../article/Article";
 import { useUser } from "../../context/UserContext";
-import Cookies from "js-cookie";
-export default function Home() {
+import { Post } from "../../types";
+import { Skeleton } from "antd";
+
+const Home: React.FC = (): JSX.Element => {
   const { bool } = useUser()
-  const [post, setPost] = useState<Array<any>>([])
+  const [post, setPost] = useState<Array<Post>>([])
 
   useEffect(() => {
     (async () => {
-      const token = Cookies.get('token')
+      const token = Cookies.get('token') as string
       if (token) {
-        const postFil = []
         const data: any = await http.get('/posts');
         if (data.data) {
-          postFil.push(...data.data.filter((data: any) => data.author !== null))
-          setPost(postFil)
+          setPost(data.data)
         }
       }
     })()
@@ -23,7 +25,12 @@ export default function Home() {
 
   return (
     <>
-      {post.length > 0 && post.map((post: any, index: number) => <Article key={index} post={post} />).reverse()}
+      {post.length > 0 ?
+        post.map((post: Post, index: number) => <Article key={index} post={post} />).reverse()
+        : <Skeleton />
+      }
     </>
   )
 }
+
+export default Home

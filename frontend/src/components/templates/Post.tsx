@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
+
 import Header from "../layout/Header";
 import LeftSide from "../layout/LeftSide";
-const Post: React.FC = () => {
+
+const Post: React.FC = (): JSX.Element => {
   return (
     <>
       <Header />

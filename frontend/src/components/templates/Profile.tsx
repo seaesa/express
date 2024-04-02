@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom";
+
 import Header from "../layout/Header";
-import { useUser } from "../../context/UserContext";
-export default function Profile() {
-  const { user } = useUser()
+
+const Profile: React.FC = (): JSX.Element => {
   return (
     <>
-      {user &&
-        <>
-          <Header />
-          <Outlet />
-        </>
-      }
+      <Header />
+      <Outlet />
     </>
   )
 }
+
+export default Profile

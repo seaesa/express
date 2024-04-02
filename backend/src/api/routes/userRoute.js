@@ -5,6 +5,7 @@ const async = require('express-async-handler');
 const userController = require('../controllers/userController');
 
 router.post('/current', async(userController.currentUser));
+router.get('/suggest', async(userController.suggestUser));
 router.get('/:id', async(userController.getUser));
 router.get('/', async(userController.getListUser));
 

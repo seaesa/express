@@ -1,23 +1,33 @@
-import Suggestion from "./Sugguest";
-import { useUser } from "../../context/UserContext";
+import { useEffect, useState } from "react";
 
-export default function Suggest() {
-  const { suggestUser } = useUser()
+import Suggestion from "./Sugguest";
+import { http } from "../../service/axios";
+import { User } from "../../types";
+
+const Suggest: React.FC = (): JSX.Element => {
+  const [suggestUser, setSuggestUser] = useState<Array<User>>([]);
+
+  useEffect(() => {
+    (async () => {
+      const suggest: any = await http.get('/users/suggest')
+      setSuggestUser(suggest.suggestUser)
+    })()
+  }, [])
+
   return (
     <>
-      {suggestUser &&
+      {suggestUser.length > 0 ?
         <div>
           <div className='flex items-center justify-between text-sm font-medium'>
             <p className='text-neutral-400'>Suggestions For You</p>
-            <p className='cursor-pointer' style={{ fontSize: 12 }}>
-              See All
-            </p>
+            <p className='cursor-pointer' style={{ fontSize: 12 }}> See All </p>
           </div>
-          {suggestUser && suggestUser.length > 0 &&
-            suggestUser.map((user: any, index: number) => <Suggestion user={user} key={index} />)
-          }
+          {suggestUser.map((suggest: User, index: number) => <Suggestion user={suggest} key={index} />)}
         </div>
+        : <div className="my-6"></div>
       }
     </>
   )
 }
+
+export default Suggest

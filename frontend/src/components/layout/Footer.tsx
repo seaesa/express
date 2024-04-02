@@ -1,28 +1,41 @@
-export default function Footer() {
+import { Link } from "react-router-dom";
+
+const Footer: React.FC = (): JSX.Element => {
+
   return (
     <footer className="flex flex-col">
       <div className="text-sm">
         <ul className="my-2 overflow-hidden list-none max-w-[190px] mx-auto text-blue-400">
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Giới thiệu</a> </li>
+            <Link to="/">Giới thiệu</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Trợ giúp</a></li>
+            <Link to="/">Trợ giúp</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Báo chí</a></li>
+            <Link to="/">Báo chí</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">API</a></li>
+            <Link to="/">API</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Việc làm</a> </li>
+            <Link to="/">Việc làm</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Quyền riêng tư</a> </li>
+            <Link to="/">Quyền riêng tư</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Điều khoản</a> </li>
+            <Link to="/">Điều khoản</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Vị trí</a> </li>
+            <Link to="/">Vị trí</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href="">Ngôn ngữ</a> </li>
+            <Link to="/">Ngôn ngữ</Link>
+          </li>
           <li className="inline-block mx-1 hover:underline">
-            <a href=""></a> Meta đã xác minh</li>
+            <Link to="/">Meta đã xác minh</Link>
+          </li>
         </ul>
         <span>© 2024 INSTAGRAM FROM META</span>
       </div>
@@ -30,3 +43,5 @@ export default function Footer() {
 
   )
 }
+
+export default Footer
