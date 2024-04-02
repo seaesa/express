@@ -5,7 +5,7 @@ const Suggestion = ({ user }: { user: any }) => {
   return (
     <div className='flex items-center space-x-4 text-sm my-4'>
       <div className='h-10 w-10 bg-neutral-200 rounded-full'>
-        <Link to='/' className="h-full w-full">
+        <Link to={user.idUser} className="h-full w-full">
           <Image
             src={user.defaultAvatar}
           />

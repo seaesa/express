@@ -8,7 +8,7 @@ export default function User() {
   return (
     <div className='flex items-center space-x-4 text-sm my-6'>
       <Link to={`/${user.idUser}`} className='h-16 w-16 bg-neutral-200 rounded-full'>
-        <Image src={user.defaultAvatar} />
+        <Image src={user.avatar || user.defaultAvatar} />
       </Link>
       <div className='flex-1'>
         <p className='font-medium'>{''}</p>

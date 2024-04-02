@@ -1,4 +1,4 @@
-import { AliwangwangOutlined, CloseOutlined, EllipsisOutlined, HeartOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons"
+import { AliwangwangOutlined, EllipsisOutlined, HeartOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons"
 import { Avatar, Image } from "antd"
 import Icon from "../icons/Icon"
 import { useEffect, useState } from "react"

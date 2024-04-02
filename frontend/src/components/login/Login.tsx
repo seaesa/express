@@ -9,6 +9,9 @@ import { useUser } from '../../context/UserContext';
 import Loading from '../loading';
 import { App } from 'antd';
 import Cookies from 'js-cookie';
+import { auth, googleAuth } from '../../db/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { FacebookOutlined, GoogleOutlined } from '@ant-design/icons';
 const Login = () => {
   const { setUser } = useUser();
   const { message, modal } = App.useApp()
@@ -26,7 +29,7 @@ const Login = () => {
       if (data.user) {
         // Cookies.set('user', data.user._id.toString(), { expires: new Date(new Date().getTime() + 15 * 60 * 1000) })
         Cookies.set('token', data.token, { expires: new Date(new Date().getTime() + 15 * 60 * 2000) })
-        Cookies.set('refreshToken', data.refeshToken)
+        Cookies.set('refreshToken', data.refreshToken)
         setUser(data.user)
         setLoading(false)
         message.success({
@@ -39,6 +42,28 @@ const Login = () => {
         });
         setLoading(false)
       }
+    }
+  }
+  const handleSignInWithGoogle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    const result = await signInWithPopup(auth, googleAuth);
+    const user = result.user;
+    const data: any = await http.post('/auth/google', {
+      username: user.displayName,
+      email: user.email,
+      phone: user.phoneNumber,
+      image: user.photoURL,
+      id: user.uid,
+      displayName: user.displayName
+    })
+    console.log(data)
+    if (data.user) {
+      Cookies.set('token', data.token)
+      Cookies.set('refreshToken', data.refreshToken)
+      setUser(data.user)
+      message.success({
+        content: 'success',
+      })
     }
   }
   return (
@@ -72,16 +97,21 @@ const Login = () => {
                 </Button>
               </Form.Item>
             </Form>
-            <div className="flex justify-evenly space-x-2 w-64 mt-4">
+            <div className="flex justify-evenly space-x-2 w-64">
               <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
-              <span className="flex-none uppercase text-xs text-gray-400 font-semibold">or</span>
+              <span className="flex-none uppercase text-xs text-gray-400 font-semibold">or Sign In With</span>
               <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
             </div>
-            <button className="mt-4 flex">
-              <div className="bg-no-repeat facebook-logo mr-1"></div>
-              <span className="text-xs text-blue-900 font-semibold">Log in with Facebook</span>
-            </button>
-            <a href='/' className="text-xs text-blue-900 mt-4 cursor-pointer -mb-4">Forgot password?</a>
+            <div className='my-4'>
+              <Button className='mx-2' type='primary' icon={<FacebookOutlined />}>
+                FaceBook
+              </Button>
+              <Button
+                onClick={handleSignInWithGoogle}
+                className='mx-2' type='primary' icon={<GoogleOutlined />}>
+                Google
+              </Button>
+            </div>
           </div>
           <div className="bg-white border border-gray-300 text-center w-80 py-4">
             <span className="text-sm">Don't have an account?</span>

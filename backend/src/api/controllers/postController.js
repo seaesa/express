@@ -1,5 +1,6 @@
 const response = require('../../config/response')
 const postModel = require('../models/postModel');
+const userModel = require('../models/userModel');
 
 class postController {
   // @GET : /posts
@@ -10,19 +11,19 @@ class postController {
     // res.json({ data })
   }
   // @GET : /posts/active
-  // async getPostCurrent(req, res) {
-  //   const { id } = req.body
-  //   const data = await postModel.find({}).populate({
-  //     path: 'author',
-  //     match: { _id: id }
-  //   });
-  //   res.json({ data })
-  // }
+  async getPostCurrent(req, res) {
+    const { id } = req.body
+    const data = await postModel.find({}).populate({
+      path: 'author',
+      match: { _id: id }
+    });
+    res.json({ data })
+  }
 
   // @GET /posts/:id
   async postDetail(req, res) {
-    const { id } = req.params;
-    const data = await postModel.findOne({ slug: id }).populate('author');
+    const { id, type = 'author' } = req.params;
+    const data = await postModel.findOne({ slug: id }).populate(type);
     res.json({ data });
   }
   // @POST /posts/create

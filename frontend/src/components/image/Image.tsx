@@ -1,11 +1,9 @@
-import { ReactNode } from "react"
-
 interface ImageType {
   src: string,
   className?: string,
   [prop: string]: any
 }
-const Image = ({ src, className, ...prop }: ImageType): ReactNode => {
+const Image = ({ src, className, ...prop }: ImageType): React.ReactNode => {
   return (
     <img
       className={`cursor-pointer rounded-full object-cover object-center h-full w-full outline outline-white ${className}`}

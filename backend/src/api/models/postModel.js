@@ -9,7 +9,6 @@ const PostSchema = new mongoose.Schema({
   title: String,
   image: String,
   slug: { type: String, slug: 'title', slugPaddingSize: 1, unique: true },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
 }, { timestamps: true })
-
-module.exports = mongoose.model('Post', PostSchema)
+module.exports = mongoose.model('Post', PostSchema)   

@@ -1,14 +1,13 @@
 // module
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const unidecode = require('unidecode');
 // middleware
 const { generateToken } = require('../helpers/token');
 const response = require('../../config/response');
 
 // model
 const userModel = require('../models/userModel');
-
 class authController {
   // @POST : /auth/token
   refreshToken(req, res) {
@@ -26,22 +25,36 @@ class authController {
     if (user) {
       const compare = await bcrypt.compare(password, user.password);
       if (compare) {
-        const { token, refeshToken } = generateToken(user.id)
-        response(res, { user, token, refeshToken })
+        const { token, refreshToken } = generateToken(user.id)
+        response(res, { user, token, refreshToken })
       }
       else response(res, { message: 'mật khẩu không chính xác' })
     } else response(res, { message: 'tên đăng nhập không tồn tại' })
   }
   // @POST : /auth/register
   async register(req, res) {
-    const { username, email, password } = req.body;
+    const { username, email, password, image } = req.body;
     let user = await userModel.findOne({ username });
     if (user) response(res, { message: 'tên đăng nhập đã tồn tại' });
     else {
       const hash = await bcrypt.hash(password, 10);
-      user = await userModel.create({ username, email, password: hash });
-      const { token, refeshToken } = generateToken(user.id)
-      response(res, { user, token, refeshToken })
+      user = await userModel.create({ username, email, password: hash, avatar: image });
+      const { token, refreshToken } = generateToken(user.id)
+      response(res, { user, token, refreshToken })
+    }
+  }
+  // @POST : /auth/google
+  async google(req, res) {
+    const { username, displayName, email, image, phone } = req.body;
+    const newUsername = unidecode(username).toLocaleLowerCase().split(' ').join('');
+    const user = await userModel.findOne({ username: newUsername, email })
+    if (user) {
+      const { token, refreshToken } = generateToken(user.id)
+      response(res, { user, token, refreshToken })
+    } else {
+      const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
+      const { token, refreshToken } = generateToken(user.id)
+      response(res, { user, token, refreshToken })
     }
   }
 }

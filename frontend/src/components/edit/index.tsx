@@ -6,7 +6,6 @@ import TextArea from "antd/es/input/TextArea"
 import { useRef, useState } from "react"
 import { cloudinary, http } from "../../service/axios"
 import { useUser } from "../../context/UserContext"
-import Loading from "../loading"
 
 const Edit = ({
   post,
@@ -28,7 +27,7 @@ const Edit = ({
     setOpen(false)
     setEdit(false)
     let newUrl
-    if (!!fileRef.current.ariaChecked === true) {
+    if (fileRef.current.ariaChecked === 'true') {
       const { url } = await cloudinary.postForm('/image/upload', {
         file: (fileRef.current as any).files[0],
         upload_preset: 'dy7el9da',
@@ -69,7 +68,6 @@ const Edit = ({
           <div className="flex h-full">
             <div className="w-1/2 bg-gray-950">
               <input
-                aria-checked={false}
                 onChange={handleChangeImage}
                 ref={fileRef}
                 type="file" hidden name="image" />

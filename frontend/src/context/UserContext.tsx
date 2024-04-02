@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { http } from "../service/axios";
 import { ResponseServer, User } from "../types";
-import { App, ConfigProvider } from "antd";
+import { App, ConfigProvider, theme } from "antd";
 import Cookies from "js-cookie";
 // const initContext: any = {
 //   user: null,

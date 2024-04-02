@@ -1,5 +1,4 @@
 import { memo, useCallback, useState } from 'react';
-// import BookMark from '../../assets/images/bookmark.svg'
 import {
   HeartOutlined,
   EllipsisOutlined,
