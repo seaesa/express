@@ -7,23 +7,26 @@ import {
   PlusCircleOutlined,
   CompassOutlined,
   HeartOutlined,
-  SearchOutlined,
   BookOutlined,
   SettingOutlined,
   ReloadOutlined,
-  UserOutlined
+  UserOutlined,
 } from '@ant-design/icons';
 
 import Express from '../../assets/images/express.png';
 import { useUser } from '../../context/UserContext';
 import Image from '../image/Image';
+import { http } from '../../service/axios';
+import { Input } from 'antd';
+import Icon from '../icons/Icon';
 
 const Header: React.FC = (): JSX.Element => {
   const { user, setBool } = useUser();
   const [userOptionsOpen, setUserOptionsOpen] = useState<boolean>(false);
-  const handleLogOut = (): void => {
+  const handleLogOut = async (): Promise<void> => {
     Cookies.remove('token')
     Cookies.remove('refreshToken')
+    await http.delete('auth/logout')
     setBool((bool: boolean) => !bool)
   }
   return (
@@ -33,16 +36,15 @@ const Header: React.FC = (): JSX.Element => {
           <Link to='/' className='absolute'>
             <img src={Express} alt='express' className='-mb-2 w-24 h-auto' />
           </Link>
-          <div className='absolute left-1/2 -translate-x-1/2 bg-neutral-200 py-1.5 px-4 flex items-center rounded-md space-x-2'>
-            <SearchOutlined className='text-neutral-400 text-xl' />
-            <input type='text' className='outline-none bg-transparent' placeholder='Search' />
+          <div className='ml-auto'>
+            <Input.Search variant='filled' allowClear enterButton placeholder='Search...' />
           </div>
           <div className='flex items-center space-x-5 text-2xl ml-auto'>
-            <HomeOutlined className='cursor-pointer' />
-            <MessageOutlined className='cursor-pointer' />
-            <PlusCircleOutlined className='cursor-pointer' />
-            <CompassOutlined className='cursor-pointer' />
-            <HeartOutlined className='cursor-pointer' />
+            <Icon icon={HomeOutlined} />
+            <Icon icon={MessageOutlined} />
+            <Icon icon={PlusCircleOutlined} />
+            <Icon icon={CompassOutlined} />
+            <Icon icon={HeartOutlined} />
             <div className='relative'>
               <div className={`rounded-full flex items-center justify-center h-7 w-7 ${userOptionsOpen ? 'outline outline-1' : ''}`} >
                 <Image

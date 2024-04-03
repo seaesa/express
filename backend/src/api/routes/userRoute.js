@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 const async = require('express-async-handler');
 
-const userController = require('../controllers/userController');
+const userController = require('../app/controllers/userController');
 
 router.post('/current', async(userController.currentUser));
 router.get('/suggest', async(userController.suggestUser));

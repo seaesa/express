@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const unidecode = require('unidecode');
 // middleware
-const { generateToken } = require('../helpers/token');
-const response = require('../../config/response');
+const { generateToken } = require('../../helpers/token');
+const response = require('../../../config/response');
 
 // model
 const userModel = require('../models/userModel');
+
 class authController {
   // @POST : /auth/token
   refreshToken(req, res) {
@@ -15,33 +16,35 @@ class authController {
     jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) res.sendStatus(403)
       const { token: newToken, refreshToken: newRefeshToken } = generateToken(user.id)
-      response(res, { token: newToken, refreshToken: newRefeshToken })
+      response(req, res, { token: newToken, refreshToken: newRefeshToken })
     })
   }
   // @POST : /auth/login
   async login(req, res) {
-    const { password, ...info } = req.body;
-    const user = await userModel.findOne({ ...info });
+    const { password, username } = req.body;
+    const user = await userModel.findOne({ username });
     if (user) {
-      const compare = await bcrypt.compare(password, user.password);
+      const compare = bcrypt.compareSync(password, user.password);
       if (compare) {
+        req.user = user;
         const { token, refreshToken } = generateToken(user.id)
-        response(res, { user, token, refreshToken })
+        response(req, res, { user, token, refreshToken })
       }
-      else response(res, { message: 'mật khẩu không chính xác' })
-    } else response(res, { message: 'tên đăng nhập không tồn tại' })
+      else response(req, res, { message: 'mật khẩu không chính xác' })
+    } else response(req, res, { message: 'tên đăng nhập không tồn tại' })
   }
   // @POST : /auth/register
   async register(req, res) {
     const { username, email, password, image } = req.body;
     let user = await userModel.findOne({ username });
-    if (user) response(res, { message: 'tên đăng nhập đã tồn tại' });
+    if (user) response(req, res, { message: 'tên đăng nhập đã tồn tại' });
     else {
       const salt = bcrypt.genSaltSync(10)
       const hash = bcrypt.hashSync(password, salt);
       user = await userModel.create({ username, email, password: hash, avatar: image });
+      req.user = user;
       const { token, refreshToken } = generateToken(user.id)
-      response(res, { user, token, refreshToken })
+      response(req, res, { user, token, refreshToken })
     }
   }
   // @POST : /auth/google
@@ -51,11 +54,13 @@ class authController {
     const user = await userModel.findOne({ username: newUsername, email })
     if (user) {
       const { token, refreshToken } = generateToken(user.id)
-      response(res, { user, token, refreshToken })
+      req.user = user;
+      response(req, res, { user, token, refreshToken })
     } else {
       const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
+      req.user = user;
       const { token, refreshToken } = generateToken(user.id)
-      response(res, { user, token, refreshToken })
+      response(req, res, { user, token, refreshToken })
     }
   }
   // @POST : /auth/facebook
@@ -65,12 +70,19 @@ class authController {
     const user = await userModel.findOne({ username: newUsername, email })
     if (user) {
       const { token, refreshToken } = generateToken(user.id)
-      response(res, { user, token, refreshToken })
+      req.user = user;
+      response(req, res, { user, token, refreshToken })
     } else {
       const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
+      req.user = user;
       const { token, refreshToken } = generateToken(user.id)
-      response(res, { user, token, refreshToken })
+      response(req, res, { user, token, refreshToken })
     }
+  }
+  // @POST: /auth/logout
+  async logOut(req, res) {
+    req.user = null;
+    response(req, res, { user: null })
   }
 }
 

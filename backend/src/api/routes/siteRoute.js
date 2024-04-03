@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 // controller
-const siteController = require('../controllers/siteController');
+const siteController = require('../app/controllers/siteController');
 
-// router
+// GET
 router.get('/', siteController.home)
 
 

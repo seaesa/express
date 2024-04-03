@@ -21,10 +21,10 @@ const Login: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   // handle
   const handleSubmit = async (e: React.MouseEvent) => {
-    if (!username || !password) return
+    e.preventDefault();
+    if (!username.trim() || !password.trim()) return
     else {
       setLoading(true)
-      e.preventDefault();
       const data: any = await http.post('/auth/login', { username, password });
       if (data.user) {
         Cookies.set('token', data.token, { expires: new Date(new Date().getTime() + 15 * 60 * 2000) })
@@ -81,13 +81,13 @@ const Login: React.FC = (): JSX.Element => {
         <div className="rounded-lg shadow-lg relative bg-white w-80 pb-8 flex items-center flex-col mb-3">
           <Image src={Express} preview={false} style={{ width: '145px', height: '145px' }} />
           <Form className='w-64 flex flex-col'>
-            <Form.Item name='username' rules={[{ required: true }]} >
+            <Form.Item name='username' rules={[{ required: true, whitespace: true }]} >
               <Input
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 placeholder='username' name='username' />
             </Form.Item>
-            <Form.Item name='password' rules={[{ required: true }]} >
+            <Form.Item name='password' rules={[{ required: true, whitespace: true }]} >
               <Input.Password
                 value={password}
                 onChange={e => setPassword(e.target.value)}

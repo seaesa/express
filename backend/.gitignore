@@ -4,3 +4,4 @@ node_modules/
 #mics
 .env.development
 .env.production
+.env

@@ -75,4 +75,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MDY2YmZlM
 
 {
   "id": "66091bc910747136ecacdbfe"
-} 
+}
+
+### logout
+DELETE http://127.0.0.1:5000/api/auth/logout
+Content-Type: application/json 
+
+{
+
+}

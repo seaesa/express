@@ -1,8 +1,9 @@
-module.exports = (res, data) => {
+module.exports = (req, res, data) => {
   return res.json({
     error: false,
     message: '',
-    user: null,
+    user: req.user || null,
+    data: [],
     ...data
   })
 }
