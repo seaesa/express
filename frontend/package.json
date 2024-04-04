@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "single page app with reactJs",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
