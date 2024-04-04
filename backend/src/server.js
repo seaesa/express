@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan('dev'));
 } else env.config({ path: path.join(__dirname, '../config/.env.production') });
 
-//cors
+// cors
 const cors = require('cors');
 app.use(cors());
 
@@ -21,7 +21,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // config route
 const router = require('./api/routes/routes')
-app.use('/api', router)
+app.use('/api', router);
+
+const admin = require('./admin/routes/routes');
+app.use('/admin', admin)
+
 
 // connect DB and start server
 const DB = require('./api/db/mongoose');

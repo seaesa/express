@@ -21,9 +21,9 @@ const Login: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   // handle
   const handleSubmit = async (e: React.MouseEvent) => {
-    e.preventDefault();
     if (!username.trim() || !password.trim()) return
     else {
+      e.preventDefault()
       setLoading(true)
       const data: any = await http.post('/auth/login', { username, password });
       if (data.user) {

@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
   following: Number,
   posts: Number,
   followers: Number,
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
   is_verifyEmail: Boolean,
   is_verifyPhone: Boolean,
 }, { timestamps: true });

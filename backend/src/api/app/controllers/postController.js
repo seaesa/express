@@ -37,8 +37,13 @@ class postController {
   // @DELETE : /posts/delete
   async deletePost(req, res) {
     const { id } = req.body;
-    const data = await postModel.deleteOne({ _id: id })
-    response(req, res, { deleted: data })
+    const post = await postModel.findOne({ _id: id }).populate('author')
+    if (req.user.id === post.author.id) {
+      await postModel.deleteOne({ _id: id });
+      response(req, res, { deleted: true })
+    } else {
+      res.sendStatus(401)
+    }
   }
 }
 module.exports = new postController()

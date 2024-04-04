@@ -17,9 +17,10 @@ const SignUp: React.FC = (): JSX.Element => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false)
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     if (!username.trim() || !password.trim() || !confirmPassword.trim()) return
     else if (confirmPassword === password) {
+      e.preventDefault()
       setLoading(true)
       const data: any = await http.post('/auth/register', { username, password });
       if (data.user) {
@@ -52,7 +53,7 @@ const SignUp: React.FC = (): JSX.Element => {
             <Form.Item name='username' rules={[{ required: true }]}>
               <Input
                 onChange={(e) => setUsername(e.target.value)}
-                value={username} name='username' placeholder="username" />
+                value={username} name='username' placeholder="username" autoComplete='' />
             </Form.Item>
             <Form.Item name='password' rules={[{ required: true }]}>
               <Input.Password

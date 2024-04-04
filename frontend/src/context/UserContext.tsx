@@ -31,7 +31,6 @@ const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element 
         else setUser(null)
       } else {
         setUser(null)
-        navigate('/login')
       }
     })()
   }, [bool, navigate]);

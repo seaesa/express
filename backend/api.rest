@@ -84,3 +84,24 @@ Content-Type: application/json
 {
 
 }
+
+
+# ----------------------ADMIN---------------
+### GET
+GET http://127.0.0.1:5000/admin/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGU3NWVhNTk0NjUwYWRlZDZjZGVmYiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjIzNDY3OSwiZXhwIjoxNzEyMjM2NDc5fQ.o0fW6Bz-SPRsHI5vIvv0NT9W3AyyS_4Mc-kxfvJHsL0
+
+
+###
+GET http://127.0.0.1:5000/admin/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGU2NzBlYjA3MmQ0OTY2NTNmOGJkYiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzEyMjM0NzYwLCJleHAiOjE3MTIyMzY1NjB9.o-vuyL504CclKsBkXcuheNd2m_UzAmgI_YiFm1YQ8zw
+
+
+### DELETE
+DELETE http://127.0.0.1:5000/admin/posts/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGU3NWVhNTk0NjUwYWRlZDZjZGVmYiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjIzNDY3OSwiZXhwIjoxNzEyMjM2NDc5fQ.o0fW6Bz-SPRsHI5vIvv0NT9W3AyyS_4Mc-kxfvJHsL0
+
+{
+  "id": "660ea07142154281c4093e9e"
+}

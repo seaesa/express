@@ -5,20 +5,17 @@ import { http } from '../../service/axios'
 import Article from "../article/Article";
 import { useUser } from "../../context/UserContext";
 import { Post } from "../../types";
-import { Skeleton } from "antd";
+import NoData from "../loading/Data";
 
 const Home: React.FC = (): JSX.Element => {
   const { bool } = useUser()
   const [post, setPost] = useState<Array<Post>>([])
-
   useEffect(() => {
     (async () => {
       const token = Cookies.get('token') as string
       if (token) {
         const data: any = await http.get('/posts');
-        if (data.data) {
-          setPost(data.data)
-        }
+        setPost(data.data)
       }
     })()
   }, [bool]);
@@ -27,7 +24,7 @@ const Home: React.FC = (): JSX.Element => {
     <>
       {post.length > 0 ?
         post.map((post: Post, index: number) => <Article key={index} post={post} />).reverse()
-        : <Skeleton />
+        : <NoData />
       }
     </>
   )

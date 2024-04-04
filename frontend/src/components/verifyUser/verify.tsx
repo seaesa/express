@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
 import { useUser } from "../../context/UserContext"
 
@@ -6,7 +6,7 @@ const Verify: React.FC = (): JSX.Element => {
   const { user } = useUser()
   return (
     <>
-      {user && <Outlet />}
+      {user ? <Outlet /> : <Navigate to='/login' />}
     </>
   )
 }

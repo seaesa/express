@@ -15,7 +15,7 @@ class authController {
     const { token } = req.body;
     jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
       if (err) res.sendStatus(403)
-      const { token: newToken, refreshToken: newRefeshToken } = generateToken(user.id)
+      const { token: newToken, refreshToken: newRefeshToken } = generateToken(user)
       response(req, res, { token: newToken, refreshToken: newRefeshToken })
     })
   }
@@ -27,7 +27,7 @@ class authController {
       const compare = bcrypt.compareSync(password, user.password);
       if (compare) {
         req.user = user;
-        const { token, refreshToken } = generateToken(user.id)
+        const { token, refreshToken } = generateToken(user)
         response(req, res, { user, token, refreshToken })
       }
       else response(req, res, { message: 'mật khẩu không chính xác' })
@@ -43,7 +43,7 @@ class authController {
       const hash = bcrypt.hashSync(password, salt);
       user = await userModel.create({ username, email, password: hash, avatar: image });
       req.user = user;
-      const { token, refreshToken } = generateToken(user.id)
+      const { token, refreshToken } = generateToken(user)
       response(req, res, { user, token, refreshToken })
     }
   }
@@ -53,13 +53,13 @@ class authController {
     const newUsername = unidecode(username).toLocaleLowerCase().split(' ').join('');
     const user = await userModel.findOne({ username: newUsername, email })
     if (user) {
-      const { token, refreshToken } = generateToken(user.id)
+      const { token, refreshToken } = generateToken(user)
       req.user = user;
       response(req, res, { user, token, refreshToken })
     } else {
       const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
       req.user = user;
-      const { token, refreshToken } = generateToken(user.id)
+      const { token, refreshToken } = generateToken(user)
       response(req, res, { user, token, refreshToken })
     }
   }
@@ -69,13 +69,13 @@ class authController {
     const newUsername = unidecode(username).toLocaleLowerCase().split(' ').join('');
     const user = await userModel.findOne({ username: newUsername, email })
     if (user) {
-      const { token, refreshToken } = generateToken(user.id)
+      const { token, refreshToken } = generateToken(user)
       req.user = user;
       response(req, res, { user, token, refreshToken })
     } else {
       const user = await userModel.create({ username: newUsername, displayName, email, avatar: image, phone })
       req.user = user;
-      const { token, refreshToken } = generateToken(user.id)
+      const { token, refreshToken } = generateToken(user)
       response(req, res, { user, token, refreshToken })
     }
   }
