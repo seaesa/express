@@ -6,12 +6,12 @@ COPY package*.json ./
 
 COPY ./src ./src
 COPY ./public ./public
+COPY ./config ./config
 
 RUN npm install \
-    && npm run build \
     && rm -fr node_modules
 
 EXPOSE 3000
 
 # Start the app using serve command
-CMD [ "serve", "-s", "build" ]
+CMD [ "npm", "start"]

@@ -15,23 +15,25 @@ import Verify from "./components/verifyUser/verify";
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <Routes>
-      <Route element={<Verify />}>
-        <Route element={<Template />}>
-          <Route path="/" element={<Home />} />
+    <>
+      <Routes>
+        <Route element={<Verify />}>
+          <Route element={<Template />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route element={<TemplateProfile />}>
+            <Route path="/:idUser" element={<Profile />} />
+          </Route>
+          <Route element={<Post />}>
+            <Route path="/post/:post" element={<PostDetail />} />
+          </Route>
         </Route>
-        <Route element={<TemplateProfile />}>
-          <Route path="/:idUser" element={<Profile />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Route>
-        <Route element={<Post />}>
-          <Route path="/post/:post" element={<PostDetail />} />
-        </Route>
-      </Route>
-      <Route element={<ProtectedRoute />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
