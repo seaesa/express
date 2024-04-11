@@ -18,7 +18,7 @@ const Post: React.FC = (): JSX.Element => {
   const handleAddPost = async (e: React.MouseEvent): Promise<void> => {
     e.preventDefault();
     setLoading(true);
-    const { url } = await cloudinary.postForm('/image/upload', {
+    const { url }: any = await cloudinary.postForm('/image/upload', {
       file,
       upload_preset: 'dy7el9da',
       cloud_name: 'ddsypvnqg',

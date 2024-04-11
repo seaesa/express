@@ -21,7 +21,8 @@ interface ThemeProviderTypes {
 const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element => {
   const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null);
-  const [bool, setBool] = useState<boolean>(false)
+  const [bool, setBool] = useState<boolean>(false);
+
   useEffect(() => {
     (async (): Promise<void> => {
       const token: any = Cookies.get('token')
@@ -54,4 +55,3 @@ const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element 
 }
 export const useUser = (): initialContext => useContext<initialContext>(UserContext)
 export default ThemeProvider
-

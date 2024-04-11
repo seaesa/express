@@ -26,7 +26,7 @@ const Edit: React.FC<EditTypes> = ({ post, setEdit, setOpen, setLoading }): JSX.
     setEdit(false)
     let newUrl
     if ((fileRef.current as HTMLInputElement).ariaChecked === 'true') {
-      const { url } = await cloudinary.postForm('/image/upload', {
+      const { url }: any = await cloudinary.postForm('/image/upload', {
         file: (fileRef.current as any).files[0],
         upload_preset: 'dy7el9da',
         cloud_name: 'ddsypvnqg',

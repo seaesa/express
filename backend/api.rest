@@ -20,7 +20,7 @@ POST http://127.0.0.1:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username":"ngochai",
+  "username":"ngochai1",
   "password":"cocainit"
 }
 
@@ -89,8 +89,7 @@ Content-Type: application/json
 # ----------------------ADMIN---------------
 ### GET
 GET http://127.0.0.1:5000/admin/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGU3NWVhNTk0NjUwYWRlZDZjZGVmYiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMjIzNDY3OSwiZXhwIjoxNzEyMjM2NDc5fQ.o0fW6Bz-SPRsHI5vIvv0NT9W3AyyS_4Mc-kxfvJHsL0
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZhYTZkZDdkYTY0MzM4MzFjZjBiZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzEyNTYzMTY1LCJleHAiOjE3MTI1NjQ5NjV9.ZK8pC7gV554CtAat1pOlD0gPmRuEHlBA8A97lt2TD3M
 
 ###
 GET http://127.0.0.1:5000/admin/users

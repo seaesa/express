@@ -23,7 +23,10 @@ export interface initialContext {
   bool: boolean,
   setBool: React.Dispatch<React.SetStateAction<boolean>>
 }
-
+const test = {
+  id: 1,
+  test: 'cocainit'
+}
 export interface Post {
   author: User,
   slug: string,
