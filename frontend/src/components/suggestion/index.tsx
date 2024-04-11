@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import Suggestion from "./Sugguest";
 import { http } from "../../service/axios";
@@ -8,7 +8,7 @@ const Suggest: React.FC = (): JSX.Element => {
   const [suggestUser, setSuggestUser] = useState<Array<User>>([]);
 
   useEffect(() => {
-    (async () => {
+    (async (): Promise<void> => {
       const suggest: any = await http.get('/users/suggest')
       setSuggestUser(suggest.suggestUser)
     })()
@@ -30,4 +30,4 @@ const Suggest: React.FC = (): JSX.Element => {
   )
 }
 
-export default Suggest
+export default memo(Suggest)

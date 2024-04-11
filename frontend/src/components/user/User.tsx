@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { useUser } from "../../context/UserContext";
 import Image from "../image/Image";
+import { memo } from "react";
 
 const User: React.FC = (): JSX.Element => {
   const { user } = useUser()
@@ -21,4 +22,4 @@ const User: React.FC = (): JSX.Element => {
   )
 }
 
-export default User
+export default memo(User)

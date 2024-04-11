@@ -16,7 +16,7 @@ const PostDetail: React.FC = (): JSX.Element => {
       const postDetail: any = await http.get(`posts/${post}`);
       setPosts(postDetail.data)
     })()
-  }, [post])
+  }, [])
 
   return (
     <>

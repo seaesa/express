@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import Image from "../image/Image";
 import { User } from "../../types";
+import { memo } from "react";
 
 interface SuggestionTypes {
   user: User
@@ -29,4 +30,4 @@ const Suggestion: React.FC<SuggestionTypes> = ({ user }): JSX.Element => {
   );
 };
 
-export default Suggestion;
+export default memo(Suggestion);

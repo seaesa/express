@@ -8,10 +8,10 @@ import Signup from "./components/signup/Signup";
 import Template from "./components/templates/Main";
 import TemplateProfile from "./components/templates/Profile";
 import Profile from "./components/profile/Profile";
-import ProtectedRoute from "./components/protected";
 import Post from "./components/templates/Post";
 import PostDetail from "./components/post/postDetail";
 import Verify from "./components/verifyUser/verify";
+import VerifyLogin from "./components/verifyUser/verifyLogin";
 
 const App: React.FC = (): JSX.Element => {
   return (
@@ -28,7 +28,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/post/:post" element={<PostDetail />} />
           </Route>
         </Route>
-        <Route element={<ProtectedRoute />}>
+        <Route element={<VerifyLogin />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>

@@ -1,10 +1,9 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { App, ConfigProvider } from "antd";
-import Cookies from "js-cookie";
-
-import { http } from "../service/axios";
 import { ResponseServer, User, initialContext } from "../types";
+import { http } from "../service/axios";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 // context
 const context: initialContext = {
@@ -19,22 +18,28 @@ interface ThemeProviderTypes {
   children: React.ReactNode
 }
 const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element => {
-  const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null);
   const [bool, setBool] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const getCurrentUser = useCallback(async (): Promise<void> => {
+    const token: any = Cookies.get('token')
+    if (token) {
+      const user: ResponseServer = await http.post(`users/current`, { token });
+      if (user.user) setUser(user.user);
+      else {
+        setUser(null)
+        navigate('/login')
+      }
+    } else {
+      setUser(null)
+      navigate('/login')
+    }
+  }, [user])
 
   useEffect(() => {
-    (async (): Promise<void> => {
-      const token: any = Cookies.get('token')
-      if (token) {
-        const user: ResponseServer = await http.post(`users/current`, { token });
-        if (user.user) setUser(user.user);
-        else setUser(null)
-      } else {
-        setUser(null)
-      }
-    })()
-  }, [bool, navigate]);
+    getCurrentUser()
+  }, [bool]);
 
   return (
     <UserContext.Provider value={{ user, setUser, bool, setBool }}>
