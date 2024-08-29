@@ -47,7 +47,9 @@ const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element 
         components: {
           Button: {
             primaryColor: '#1677ff',
-            algorithm: true
+            algorithm: true,
+            colorPrimaryBg: 'transparent',
+            primaryShadow: '0 2px 0 rgba(5, 145, 255, 0.1)'
           },
         }, cssVar: true,
       }}>
