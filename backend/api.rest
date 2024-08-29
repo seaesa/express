@@ -3,6 +3,9 @@
 ### get all posts
 GET http://127.0.0.1:5000/api/posts 
 
+###
+GET https://express-qohz83n19-seaesas-projects.vercel.app/api/users 
+
 ### get post detail
 GET http://127.0.0.1:5000/api/posts/xin-chao-quy-di
 
