@@ -30,3 +30,6 @@ app.use('/admin', admin)
 // connect DB and start server
 const DB = require('./api/db/mongoose');
 DB.connect(app);
+
+// deploy server configuration
+module.exports = app;

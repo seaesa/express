@@ -1,10 +1,11 @@
 {
-  "name": "rest api for react app",
+  "name": "api for express",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node src/server.js",
+    "build": "node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0"
   }
 }

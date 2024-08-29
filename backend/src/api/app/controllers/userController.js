@@ -22,5 +22,8 @@ class userController {
     response(req, res, { user })
   }
 
+  getListUser(req, res) {
+    response(req, res, { message: 'hello worlds' })
+  }
 }
 module.exports = new userController()
