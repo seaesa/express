@@ -16,8 +16,8 @@ const Login: React.FC = (): JSX.Element => {
   const { setUser } = useUser();
   const { message, modal } = App.useApp();
   // hooks 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('ngochai');
+  const [password, setPassword] = useState<string>('cocainit');
   const [loading, setLoading] = useState<boolean>(false);
   // handle
   const handleSubmit = async (e: React.MouseEvent) => {
