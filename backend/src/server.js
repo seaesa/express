@@ -6,11 +6,8 @@ const app = express();
 // config enviroment
 const morgan = require('morgan');
 const env = require('dotenv');
-if (process.env.NODE_ENV === "development") {
-  env.config({ path: path.join(__dirname, '../config/.env.development') });
-  app.use(morgan('dev'));
-} else env.config({ path: path.join(__dirname, '../config/.env.production') });
-
+env.config({ path: path.join(__dirname, '../config/.env.development') });
+app.use(morgan('dev'));
 // cors
 const cors = require('cors');
 app.use(cors());
@@ -31,5 +28,5 @@ app.use('/admin', admin)
 const DB = require('./api/db/mongoose');
 DB.connect(app);
 
-// deploy server configuration
+// deploy server
 module.exports = app;

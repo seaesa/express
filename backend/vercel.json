@@ -2,8 +2,15 @@
   "version": 2,
   "cleanUrls": true,
   "env": {
+    "CI": "false",
     "JWT_TOKEN_SECRET": "4c8081aaf2c628ce0f0b81ef1cfacfa905161d55408de3058681f6e35344025bcfff05a0cf91bed30d3b7411a93999db1ac1c6bbcabcb67cdffcc909",
     "JWT_REFRESH_TOKEN_SECRET": "d4d9d59a44d32d5a0742d6dc782df02344a1a8a4aa1e43a04e4d99e861273c241f8fd72e9a4bbc17756ea1374dccc9bc305687acad9e1c0c6f8edb39",
     "MONGO_DB_URI": "mongodb+srv://admin:admin@dbcluslter.3pjttte.mongodb.net/express"
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/src"
+    }
+  ]
 }
