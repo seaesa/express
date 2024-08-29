@@ -37,7 +37,7 @@ const http = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
 });
 const cloudinary = axios.create({
-  baseURL: `${process.env.REACT_APP_API_CLOUDINARY}/ddsypvnqg`
+  baseURL: process.env.REACT_APP_API_CLOUDINARY
 })
 
 // config http server

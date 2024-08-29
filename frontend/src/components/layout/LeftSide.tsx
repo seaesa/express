@@ -4,7 +4,7 @@ import { BellFilled, HomeFilled, MessageFilled, SettingFilled, TeamOutlined, Uno
 const LeftSide: React.FC = (): JSX.Element => {
   return (
     <>
-      <aside className="hidden w-80 overflow-y-auto md:block flex-shrink-0">
+      <aside className="hidden w-80 overflow-y-auto md:block flex-shrink-0 col-span-1">
         <div className="mt-12 p-2 flex justify-center">
           <Link to="/"
             className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
