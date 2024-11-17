@@ -43,16 +43,7 @@ const ThemeProvider: React.FC<ThemeProviderTypes> = ({ children }): JSX.Element 
 
   return (
     <UserContext.Provider value={{ user, setUser, bool, setBool }}>
-      <ConfigProvider theme={{
-        components: {
-          Button: {
-            primaryColor: '#1677ff',
-            algorithm: true,
-            colorPrimaryBg: 'transparent',
-            primaryShadow: '0 2px 0 rgba(5, 145, 255, 0.1)'
-          },
-        }, cssVar: true,
-      }}>
+      <ConfigProvider>
         <App>
           {children}
         </App>

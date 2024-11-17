@@ -11,7 +11,6 @@ const LeftSide: React.FC = (): JSX.Element => {
             <HomeFilled className="ml-2" />
             <span className="ml-2 text-sm tracking-wide truncate">Home</span>
           </Link>
-
         </div>
         <div className="my-2 p-2 flex justify-center">
           <Link to="/"

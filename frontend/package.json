@@ -1,6 +1,6 @@
 {
-  "name": "single page app with reactJs",
-  "version": "0.1.0",
+  "name": "breads",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.3.4",
