@@ -11,7 +11,7 @@ const Template: React.FC = (): JSX.Element => {
       <Header />
       <div className="container mx-auto grid grid-cols-4">
         <LeftSide />
-        <div className="flex flex-col flex-1 mr-10 overflow-y-auto max-h-[100vh] no-scrollbar col-span-2">
+        <div className="col-span-4 md:col-span-2 flex flex-col flex-1 overflow-y-auto max-h-[100vh] no-scrollbar items-center">
           <Action />
           <Outlet />
         </div>

@@ -6,7 +6,7 @@ import Footer from "./Footer";
 const RightSide: React.FC = (): JSX.Element => {
   return (
     <>
-      <div className="flex flex-col col-span-1">
+      <div className="hidden md:flex flex-col col-span-1">
         <User />
         <Suggest />
         <Footer />

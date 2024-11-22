@@ -32,19 +32,21 @@ const Header: React.FC = (): JSX.Element => {
   return (
     <>
       <header className='sticky top-0 border-b bg-white z-20'>
-        <div className='container mx-auto p-4 flex items-center justify-between relative' style={{ maxWidth: 940 }}  >
-          <Link to='/' className='absolute'>
+        <div className='container mx-auto p-4 flex items-center justify-between relative max-h-24' style={{ maxWidth: 940 }}  >
+          <Link to='/' >
             <img src={Express} alt='express' className='-mb-2 w-24 h-auto' />
           </Link>
           <div className='ml-auto'>
             <Input.Search variant='filled' allowClear enterButton placeholder='Search...' />
           </div>
           <div className='flex items-center space-x-5 text-2xl ml-auto'>
-            <Icon icon={HomeOutlined} />
-            <Icon icon={MessageOutlined} />
-            <Icon icon={PlusCircleOutlined} />
-            <Icon icon={CompassOutlined} />
-            <Icon icon={HeartOutlined} />
+            <div className='hidden md:block space-x-4'>
+              <Icon icon={HomeOutlined} />
+              <Icon icon={MessageOutlined} />
+              <Icon icon={PlusCircleOutlined} />
+              <Icon icon={CompassOutlined} />
+              <Icon icon={HeartOutlined} />
+            </div>
             <div className='relative'>
               <div className={`rounded-full flex items-center justify-center h-7 w-7 ${userOptionsOpen ? 'outline outline-1' : ''}`} >
                 <Image
