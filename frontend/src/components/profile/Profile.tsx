@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { http } from '../../service/axios'
 import { Post, User } from "../../types";
+import { Avatar } from 'antd';
 const Profile: React.FC = (): JSX.Element => {
   const { idUser } = useParams()
   const [user, setUser] = useState<User | null>(null)
@@ -32,9 +33,7 @@ const Profile: React.FC = (): JSX.Element => {
               <div className="profile">
 
                 <div className="profile-image">
-
-                  <img src={user.avatar} alt="" />
-
+                  <Avatar className='h-36 w-36' src={user.avatar || user.defaultAvatar} />
                 </div>
 
                 <div className="profile-user-settings">
@@ -71,11 +70,11 @@ const Profile: React.FC = (): JSX.Element => {
 
           <main>
 
-            <div className={`container mx-auto`}>
+            <div className={`container mx-auto p-2`}>
 
               <div className="gallery">
                 {post.map(post => (
-                  <Link to={`/post/${post.slug}`} className="gallery-item" tabIndex={0}>
+                  <Link key={post._id} to={`/post/${post.slug}`} className="gallery-item" tabIndex={0}>
 
                     <img src={post.image} className="gallery-image" alt="" />
 
@@ -92,8 +91,6 @@ const Profile: React.FC = (): JSX.Element => {
                 ))}
 
               </div>
-
-              {/* <div className="loader"></div> */}
 
             </div>
 
